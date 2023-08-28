@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
-    url: jdbc:hsqldb:hsql://localhost:9001/testdb
+    url: jdbc:hsqldb:file:./bank-system/db/demodb
     username: sa
     password:
   jpa:
