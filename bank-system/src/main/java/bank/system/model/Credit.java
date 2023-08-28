@@ -7,7 +7,7 @@ import org.hibernate.annotations.UuidGenerator;
 import java.util.UUID;
 
 @Entity
-@Table(name = "client"
+@Table(name = "credit"
         ,schema = "PUBLIC"
 )
 @AllArgsConstructor
@@ -15,22 +15,14 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-public class Client {
+public class Credit {
     @Id
     @GeneratedValue
     @UuidGenerator
     @Column
     private UUID id;
-    @Column
-    private String firstName;
-    @Column
-    private String secondName;
-    @Column
-    private String phoneNumber;
-    @Column
-    private String email;
-    @Column
-    private String passportID;
 
+    private double limit;
+    private double interestRate;
 
 }

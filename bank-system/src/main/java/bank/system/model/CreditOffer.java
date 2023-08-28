@@ -4,33 +4,31 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "client"
-        ,schema = "PUBLIC"
+@Table(name = "credit_offer"
+        , schema = "PUBLIC"
 )
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
-public class Client {
+public class CreditOffer {
     @Id
     @GeneratedValue
     @UuidGenerator
     @Column
     private UUID id;
-    @Column
-    private String firstName;
-    @Column
-    private String secondName;
-    @Column
-    private String phoneNumber;
-    @Column
-    private String email;
-    @Column
-    private String passportID;
 
+    @OneToOne
+    private Client client;
 
+    @OneToOne
+    private Credit credit;
+
+    @OneToMany
+    private List<PaymentEvent> paymentEventList;
 }
