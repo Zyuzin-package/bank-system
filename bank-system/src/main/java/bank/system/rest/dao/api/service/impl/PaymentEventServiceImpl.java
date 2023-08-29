@@ -1,9 +1,8 @@
-package bank.system.rest.dao.impl;
+package bank.system.rest.dao.api.service.impl;
 
-import bank.system.model.Client;
 import bank.system.model.PaymentEvent;
 import bank.system.rest.dao.api.repository.PaymentEventRepository;
-import bank.system.rest.dao.api.service.PaymentEventService;
+import bank.system.rest.dao.api.service.api.PaymentEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

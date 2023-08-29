@@ -1,4 +1,4 @@
-package bank.system.rest.dao.api.service;
+package bank.system.rest.dao.api.service.api;
 
 import bank.system.model.Credit;
 import bank.system.model.CreditOffer;

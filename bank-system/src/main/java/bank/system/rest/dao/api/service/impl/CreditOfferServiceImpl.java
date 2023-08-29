@@ -1,9 +1,8 @@
-package bank.system.rest.dao.impl;
+package bank.system.rest.dao.api.service.impl;
 
-import bank.system.model.Client;
 import bank.system.model.CreditOffer;
 import bank.system.rest.dao.api.repository.CreditOfferRepository;
-import bank.system.rest.dao.api.service.CreditOfferService;
+import bank.system.rest.dao.api.service.api.CreditOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
