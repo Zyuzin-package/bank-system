@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment event</title>
+</head>
+<body>
+
+<div>
+    <table align="center" border="1">
+        <tr>
+            <td>
+                Client first name
+            </td>
+            <td>
+                Payment date
+            </td>
+            <td>
+                Payment sum
+            </td>
+            <td>
+                Credit sum
+            </td>
+            <td>
+                Interest sum
+            </td>
+            <td></td>
+            <td>
+            </td>
+        </tr>
+        <tr th:unless="${#lists.isEmpty(paymentEvents)}" th:each="paymentEvent : ${paymentEvents}">
+            <td th:text="${paymentEvent.creditOffer.client.firstName}"></td>
+            <td th:text="${paymentEvent.localDate}"></td>
+            <td th:text="${paymentEvent.paymentSum}"></td>
+            <td th:text="${paymentEvent.creditSum}"></td>
+            <td th:text="${paymentEvent.interestSum}"></td>
+            <td><a th:href="@{/paymentEvents/edit/{id}(id=${paymentEvent.id})}">Edit</a></td>
+        </tr>
+        <tr>
+            <td colspan="6" align="center">
+                <a th:href="@{/paymentEvents/new}">
+                    <button>Add</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update credit</title>
+</head>
+<body>
+<form th:action="@{/credits/new}" th:object="${credit}" method="post">
+    <table border="1" align="center">
+        <tr>
+            <td>
+                Limit
+            </td>
+            <td>
+                <input type="text" th:field="*{limit}" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Interest rate
+            </td>
+            <td>
+                <input type="text" th:field="*{interestRate}"/>
+                <input type="hidden" th:field="*{id}" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submit">Save</button>
+            </td>
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+</head>
+<body>
+
+<div>
+    <table align="center" border="1">
+        <tr>
+            <td>
+                First name
+            </td>
+            <td>
+                Second name
+            </td>
+            <td>
+                Phone number
+            </td>
+            <td>
+                Email
+            </td>
+            <td>
+                Passport ID
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr th:unless="${#lists.isEmpty(clients)}" th:each="client : ${clients}">
+            <td th:text="${client.firstName}"></td>
+            <td th:text="${client.secondName}"></td>
+            <td th:text="${client.phoneNumber}"></td>
+            <td th:text="${client.email}"></td>
+            <td th:text="${client.passportID}"></td>
+            <td><a th:href="@{/clients/edit/{passport}(passport=${client.passportID})}">Edit</a></td>
+        </tr>
+        <tr>
+            <td colspan="5" align="center">
+                <a th:href="@{/clients/new}">
+                    <button>Add</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

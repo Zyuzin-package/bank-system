@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Credits</title>
+</head>
+<body>
+
+<div>
+    <table align="center" border="1">
+        <tr>
+            <td>
+                Limit
+            </td>
+            <td>
+                Interest rate
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr th:unless="${#lists.isEmpty(credits)}" th:each="credit : ${credits}">
+            <td th:text="${credit.limit}"></td>
+            <td th:text="${credit.interestRate}"></td>
+            <td><a th:href="@{/credits/edit/{id}(id=${credit.id})}">Edit</a></td>
+        </tr>
+        <tr>
+            <td colspan="3" align="center">
+                <a th:href="@{/credits/new}">
+                    <button>Add</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

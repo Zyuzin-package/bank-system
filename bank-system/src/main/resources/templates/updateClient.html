@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create client</title>
+</head>
+<body>
+<form th:action="@{/clients/new}" th:object="${client}" method="post">
+    <table border="1" align="center">
+        <tr>
+            <td>
+                First name
+            </td>
+            <td>
+                <input type="text" th:field="*{firstName}" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Second name
+            </td>
+            <td>
+                <input type="text" th:field="*{secondName}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Phone number
+            </td>
+            <td>
+                <input type="text" th:field="*{phoneNumber}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email
+            </td>
+            <td>
+                <input type="text" th:field="*{email}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Passport ID
+            </td>
+            <td>
+                <input type="text" th:field="*{passportID}"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submit">Save</button>
+            </td>
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>
