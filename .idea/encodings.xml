@@ -3,5 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/bank-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bank-system/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bank-system/src/main/resources/application-dev.yml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/bank-system/src/main/resources/application-prod.yml" charset="windows-1251" />
   </component>
 </project>
