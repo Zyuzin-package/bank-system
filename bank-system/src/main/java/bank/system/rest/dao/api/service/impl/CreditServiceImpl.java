@@ -1,8 +1,8 @@
 package bank.system.rest.dao.api.service.impl;
 
-import bank.system.model.Credit;
+import bank.system.model.domain.Credit;
 import bank.system.rest.dao.api.repository.CreditRepository;
-import bank.system.rest.dao.api.service.api.CreditService;
+import bank.system.rest.dao.api.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CreditServiceImpl implements CreditService {
+public class CreditServiceImpl implements StorageDAO<Credit,UUID> {
 
     private final CreditRepository creditRepository;
 
@@ -38,8 +38,8 @@ public class CreditServiceImpl implements CreditService {
     public Credit update(Credit credit) {
         Credit savedCredit = creditRepository.findById(credit.getId()).orElse(null);
 
-        if (savedCredit != null) {
-            throw new RuntimeException("Credit with id " + savedCredit.getId() + " not found");
+        if (savedCredit == null) {
+            throw new RuntimeException("Credit not found");
         }
 
         return creditRepository.save(credit);

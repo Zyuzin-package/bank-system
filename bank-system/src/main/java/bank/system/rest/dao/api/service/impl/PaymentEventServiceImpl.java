@@ -1,8 +1,8 @@
 package bank.system.rest.dao.api.service.impl;
 
-import bank.system.model.PaymentEvent;
+import bank.system.model.domain.PaymentEvent;
 import bank.system.rest.dao.api.repository.PaymentEventRepository;
-import bank.system.rest.dao.api.service.api.PaymentEventService;
+import bank.system.rest.dao.api.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PaymentEventServiceImpl implements PaymentEventService {
+public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
 
     private final PaymentEventRepository paymentEventRepository;
 
@@ -38,8 +38,8 @@ public class PaymentEventServiceImpl implements PaymentEventService {
     public PaymentEvent update(PaymentEvent paymentEvent) {
         PaymentEvent SavedPaymentEvent = paymentEventRepository.findById(paymentEvent.getId()).orElse(null);
 
-        if (SavedPaymentEvent != null) {
-            throw new RuntimeException("Payment event with id " + paymentEvent.getId() + " not found");
+        if (SavedPaymentEvent == null) {
+            throw new RuntimeException("Payment event not found");
         }
 
         return paymentEventRepository.save(paymentEvent);
@@ -56,4 +56,5 @@ public class PaymentEventServiceImpl implements PaymentEventService {
         paymentEventRepository.deleteById(uuid);
         return true;
     }
+
 }

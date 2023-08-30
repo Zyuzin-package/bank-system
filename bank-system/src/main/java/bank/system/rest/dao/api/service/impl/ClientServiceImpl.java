@@ -1,8 +1,8 @@
 package bank.system.rest.dao.api.service.impl;
 
-import bank.system.model.Client;
+import bank.system.model.domain.Client;
 import bank.system.rest.dao.api.repository.ClientRepository;
-import bank.system.rest.dao.api.service.api.ClientService;
+import bank.system.rest.dao.api.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl implements StorageDAO<Client,UUID> {
 
     private final ClientRepository clientRepository;
 
@@ -36,11 +36,15 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client update(Client client) {
-        Client savedClient = clientRepository.findById(client.getId()).orElse(null);
+        System.out.println("\n\n"+ client);
 
-        if (savedClient != null) {
-            throw new RuntimeException("Client with id " + savedClient.getId() + " not found");
+        Client savedClient = clientRepository.findByPassportID(client.getPassportID());
+
+        if (savedClient == null) {
+            throw new RuntimeException("Client not found");
         }
+
+        client.setId(savedClient.getId());
 
         return clientRepository.save(client);
     }
@@ -56,4 +60,5 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.deleteById(uuid);
         return true;
     }
+
 }
