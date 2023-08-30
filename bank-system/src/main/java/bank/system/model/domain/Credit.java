@@ -1,4 +1,4 @@
-package bank.system.model;
+package bank.system.model.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,11 +10,12 @@ import java.util.UUID;
 @Table(name = "credit"
         ,schema = "PUBLIC"
 )
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Credit {
     @Id
     @GeneratedValue

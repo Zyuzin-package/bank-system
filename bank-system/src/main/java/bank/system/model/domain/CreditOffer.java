@@ -1,4 +1,4 @@
-package bank.system.model;
+package bank.system.model.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
