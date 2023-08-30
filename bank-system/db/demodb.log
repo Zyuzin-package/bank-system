@@ -7,13 +7,33 @@ drop table if exists credit_offer_payment_event_list cascade
 create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
 create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
 create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
-create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
 create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
 alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
 alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
 alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
 alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
 alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+/*C3*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C4*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C5*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/SET SCHEMA PUBLIC
+DISCONNECT
 drop table if exists public.client cascade 
 drop table if exists public.credit cascade 
 drop table if exists public.credit_offer cascade 
@@ -38,3 +58,1656 @@ DISCONNECT
 DISCONNECT
 /*C21*/SET SCHEMA PUBLIC
 DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C23*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C24*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C25*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C26*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C27*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C28*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C29*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C30*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C31*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C32*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C33*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C34*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C35*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C36*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C37*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C38*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C39*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C40*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C41*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C42*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C43*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C44*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C45*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C46*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C47*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C48*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C49*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C50*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C51*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C52*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C53*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C54*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C55*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C56*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C57*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C58*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C59*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C60*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C61*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C62*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C63*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C64*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C65*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C66*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C67*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C68*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C69*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C70*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C71*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C72*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C73*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C74*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C75*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C76*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C77*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C78*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C79*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C80*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C81*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C82*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C83*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C84*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C85*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C86*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C87*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+/*C7*/SET SCHEMA PUBLIC
+set schema PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C88*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C89*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C90*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C91*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C92*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C93*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C94*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C95*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C96*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C98*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C99*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C100*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C101*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C102*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C103*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C104*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C105*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C106*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C107*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C108*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C109*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C110*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C111*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C112*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C113*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C114*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C115*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C116*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C117*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C118*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+/*C12*/SET SCHEMA PUBLIC
+set schema PUBLIC
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+/*C8*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C9*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C10*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C11*/SET SCHEMA PUBLIC
+DISCONNECT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2004-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('077e10128e234c2a89bf63cee76271f6',100.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+set schema PUBLIC
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('84ca6be8e8604240b3839a3cce04ddd0',8989.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('40346f5a37734948ba5b7f5c754a0474',7878.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('9c061bcb6ee145cab4ecab3b163dae8b',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('1c451f107d92473d9667f953e5f4bddb',50.0E0,50.0E0,'2022-01-22',1780.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('48fa3a81c50b4a33b082418fb7448948',50.0E0,50.0E0,'2022-01-22',7878.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('2d37f0bccd6c4a86ba19de70883ca62c',50.0E0,50.0E0,'2022-01-22',7878.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('339f3572d82b4504bf54b7ec8ca9d85f',50.0E0,50.0E0,'2022-01-22',78.0E0,NULL)
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C120*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C121*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C122*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C123*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C124*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C125*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C126*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C119*/SET SCHEMA PUBLIC
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','1','2','3','4','5')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','11','22','33','44','55')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','111','222','333','444','555')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',50000.0E0,5.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',80000.0E0,7.0E0)
+COMMIT
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,NULL)
+COMMIT
+INSERT INTO CREDIT_OFFER VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd4d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO CREDIT_OFFER_PAYMENT_EVENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5c1','20e60e0175d4f44cd6f7947883ddd5b1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',100.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',50.0E0,50.0E0,'2022-01-22',7878.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',5656.0E0,50.0E0,'2022-01-22',7878.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',5656.0E0,50.0E0,'2022-01-28',7878.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT
+DELETE FROM PAYMENT_EVENT WHERE ID='20e60e0175d4f44cd6f7947883ddd5b1'
+INSERT INTO PAYMENT_EVENT VALUES('20e60e0175d4f44cd6f7947883ddd5b1',5656.0E0,50.0E0,'2022-01-03',7878.0E0,'20e60e0175d4f44cd6f7947883ddd5c1')
+COMMIT

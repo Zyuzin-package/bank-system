@@ -1,6 +1,6 @@
 /*C12*/SET SCHEMA PUBLIC
-drop table if exists public.client cascade 
-drop table if exists public.credit cascade 
+drop table if exists public.client cascade
+drop table if exists public.credit cascade
 drop table if exists public.credit_offer cascade 
 drop table if exists public.payment_event cascade 
 drop table if exists credit_offer_payment_event_list cascade 
@@ -14,10 +14,8 @@ alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy forei
 alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
 alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
 alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
-INSERT INTO CLIENT VALUES('00668341b9fc40fda94a4132df0910c2','','Kork','78-56','+89175675678','Wake')
-COMMIT
-drop table if exists public.client cascade 
-drop table if exists public.credit cascade 
+drop table if exists public.client cascade
+drop table if exists public.credit cascade
 drop table if exists public.credit_offer cascade 
 drop table if exists public.payment_event cascade 
 drop table if exists credit_offer_payment_event_list cascade 
