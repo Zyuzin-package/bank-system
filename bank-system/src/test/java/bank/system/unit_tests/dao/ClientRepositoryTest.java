@@ -1,7 +1,7 @@
 package bank.system.unit_tests.dao;
 
 
-import bank.system.model.Client;
+import bank.system.model.domain.Client;
 import bank.system.rest.dao.api.repository.ClientRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +33,7 @@ public class ClientRepositoryTest {
                 .build();
         Client savedClient = clientRepository.save(client);
 
-        assertEquals(savedClient.getFirstName(),client.getFirstName());
+        assertEquals(savedClient.getFirstName(), client.getFirstName());
     }
 
 }
