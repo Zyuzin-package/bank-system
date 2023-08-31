@@ -5,7 +5,10 @@ import bank.system.rest.dao.repository.PaymentEventRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,4 +63,14 @@ public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
     public List<PaymentEvent> getPaymentEventByOfferId(String id){
         return paymentEventRepository.getPaymentEventByOfferId(UUID.fromString(id));
     }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public List<PaymentEvent> bulkSave(List<PaymentEvent> paymentEvents){
+        List<PaymentEvent> saved = new ArrayList<>();
+        for (PaymentEvent p: paymentEvents){
+            saved.add(save(p));
+        }
+        return saved;
+    }
+
 }
