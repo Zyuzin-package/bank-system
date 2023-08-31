@@ -5,7 +5,7 @@
     <title>Update payment event</title>
 </head>
 <body>
-
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <form th:action="@{/paymentEvents/new}" th:object="${paymentEvent}" method="post">
     <table border="1" align="center">
         <tr>

@@ -5,6 +5,7 @@
     <title>Create client</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <form th:action="@{/clients/new}" th:object="${client}" method="post">
     <table border="1" align="center">
         <tr>
@@ -45,6 +46,7 @@
             </td>
             <td>
                 <input type="text" th:field="*{passportID}"/>
+                <input type="hidden" th:field="*{id}"/>
             </td>
         </tr>
         <tr>

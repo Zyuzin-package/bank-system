@@ -5,7 +5,7 @@
     <title>Payment event</title>
 </head>
 <body>
-
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <div>
     <table align="center" border="1">
         <tr>
@@ -35,6 +35,7 @@
             <td th:text="${paymentEvent.creditSum}"></td>
             <td th:text="${paymentEvent.interestSum}"></td>
             <td><a th:href="@{/paymentEvents/edit/{id}(id=${paymentEvent.id})}">Edit</a></td>
+            <td><a th:href="@{/paymentEvents/remove/{id}(id=${paymentEvent.id})}">X</a></td>
         </tr>
         <tr>
             <td colspan="6" align="center">

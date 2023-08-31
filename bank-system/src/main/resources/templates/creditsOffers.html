@@ -5,7 +5,7 @@
     <title>Credit offers</title>
 </head>
 <body>
-
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <div>
     <table align="center" border="1">
         <tr>
@@ -34,10 +34,10 @@
             <td th:text="${creditOffer.credit.limit}"></td>
             <td th:text="${creditOffer.credit.interestRate}"></td>
             <td><a th:href="@{/paymentEvents/{offerId}(offerId=${creditOffer.id})}">Payment events</a></td>
-            <td><a th:href="@{/creditsOffers/edit/{id}(id=${creditOffer.id})}">Edit</a></td>
+            <td><a th:href="@{/creditsOffers/remove/{id}(id=${creditOffer.id})}">X</a></td>
         </tr>
         <tr>
-            <td colspan="5" align="center">
+            <td colspan="7" align="center">
                 <a th:href="@{/creditsOffers/new}">
                     <button>Add</button>
                 </a>

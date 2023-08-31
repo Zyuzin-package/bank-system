@@ -5,7 +5,7 @@
     <title>Clients</title>
 </head>
 <body>
-
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <div>
     <table align="center" border="1">
         <tr>
@@ -26,6 +26,8 @@
             </td>
             <td>
             </td>
+            <td>
+            </td>
         </tr>
         <tr th:unless="${#lists.isEmpty(clients)}" th:each="client : ${clients}">
             <td th:text="${client.firstName}"></td>
@@ -33,7 +35,8 @@
             <td th:text="${client.phoneNumber}"></td>
             <td th:text="${client.email}"></td>
             <td th:text="${client.passportID}"></td>
-            <td><a th:href="@{/clients/edit/{passport}(passport=${client.passportID})}">Edit</a></td>
+            <td><a th:href="@{/clients/edit/{id}(id=${client.id})}">Edit</a></td>
+            <td><a th:href="@{/clients/remove/{id}(id=${client.id})}">X</a></td>
         </tr>
         <tr>
             <td colspan="5" align="center">

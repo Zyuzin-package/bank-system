@@ -5,6 +5,7 @@
     <title>Update credit</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <form th:action="@{/credits/new}" th:object="${credit}" method="post">
     <table border="1" align="center">
         <tr>
