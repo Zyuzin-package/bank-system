@@ -3,7 +3,7 @@ package bank.system.rest.controller;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.CreditOffer;
 import bank.system.model.domain.PaymentEvent;
-import bank.system.rest.dao.api.service.api.StorageDAO;
+import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +32,7 @@ public class PaymentEventController {
     @GetMapping("/paymentEvents/{offerId}")
     public String getPaymentsEvents(Model model, @PathVariable String offerId) {
         List<PaymentEvent> paymentEvents = new ArrayList<>();
-        System.out.println(paymentEvents);
+        System.out.println("\npaymentEvents" + paymentEvents);
 
         for (PaymentEvent paymentEvent : paymentDAO.getAll()) {
             if (UUID.fromString(offerId).equals(paymentEvent.getCreditOffer().getId())) {
@@ -68,11 +68,12 @@ public class PaymentEventController {
 
     @PostMapping("/paymentEvents/new")
     public String merge(PaymentEvent paymentEvent, Model model) {
+        CreditOffer creditOffer = creditOfferDAO.findById(UUID.fromString(creditOfferId));
+        paymentEvent.setCreditOffer(creditOffer);
         if (paymentEvent.getId() == null) {
             paymentDAO.save(paymentEvent);
         } else {
-            CreditOffer creditOffer = creditOfferDAO.findById(UUID.fromString(creditOfferId));
-            paymentEvent.setCreditOffer(creditOffer);
+
             paymentDAO.update(paymentEvent);
         }
         this.creditOfferId = null;

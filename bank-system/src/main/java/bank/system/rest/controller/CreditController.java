@@ -1,8 +1,7 @@
 package bank.system.rest.controller;
 
-import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
-import bank.system.rest.dao.api.service.api.StorageDAO;
+import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +32,7 @@ public class CreditController {
 
     @GetMapping("/credits/new")
     public String getCreatePage(Model model) {
-        model.addAttribute("credit", new Client());
+        model.addAttribute("credit", new Credit());
 
         return "updateCredit";
     }

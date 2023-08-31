@@ -2,7 +2,7 @@ package bank.system.unit_tests.dao;
 
 
 import bank.system.model.domain.Client;
-import bank.system.rest.dao.api.repository.ClientRepository;
+import bank.system.rest.dao.repository.ClientRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
