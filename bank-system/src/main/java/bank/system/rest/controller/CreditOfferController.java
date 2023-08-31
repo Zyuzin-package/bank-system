@@ -53,7 +53,6 @@ public class CreditOfferController {
 
     @GetMapping("/creditsOffers/remove/{id}")
     public String remove(@PathVariable String id) {
-
         creditOfferServiceImpl.removeById(UUID.fromString(id));
 
         return "redirect:/creditsOffers";
@@ -62,12 +61,18 @@ public class CreditOfferController {
     @PostMapping("/creditsOffers/new")
     public String merge(
             @RequestParam(name = "creditId") String creditId,
-            @RequestParam(name = "clientId") String clientId) {
+            @RequestParam(name = "clientId") String clientId,
+            @RequestParam(name = "duration") Integer duration,
+            @RequestParam(name = "fullsum") String fullsum
+    ) {
         CreditOffer creditOffer = CreditOffer.builder()
                 .credit(creditServiceImpl.findById(UUID.fromString(creditId)))
                 .client(clientServiceImpl.findById(UUID.fromString(clientId)))
+                .duration(duration)
+                .paymentSum(Double.parseDouble(fullsum))
                 .build();
         creditOfferServiceImpl.save(creditOffer);
+
 
         return "redirect:/creditsOffers";
     }
