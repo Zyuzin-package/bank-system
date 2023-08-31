@@ -17,10 +17,9 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-@ToString
 @NamedEntityGraph(name = "credit_entity-graph",
-        attributeNodes = { @NamedAttributeNode("paymentEventList"),
-                           @NamedAttributeNode("credit")})
+        attributeNodes = {@NamedAttributeNode("paymentEventList"),
+                @NamedAttributeNode("credit")})
 public class CreditOffer {
     @Id
     @GeneratedValue
@@ -30,11 +29,23 @@ public class CreditOffer {
 
     @OneToOne
     private Client client;
-
+    private double paymentSum;
     @OneToOne(fetch = FetchType.LAZY)
     private Credit credit;
-
+    private int duration;
     @OneToMany
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private List<PaymentEvent> paymentEventList;
+
+    @Override
+    public String toString() {
+        return "CreditOffer{" +
+                "id=" + id +
+                ", client=" + client +
+                ", paymentSum=" + paymentSum +
+                ", credit=" + credit +
+                ", duration=" + duration +
+                ", paymentEventList=" + paymentEventList +
+                '}';
+    }
 }
