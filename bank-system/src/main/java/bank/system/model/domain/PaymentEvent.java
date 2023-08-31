@@ -24,8 +24,10 @@ public class PaymentEvent {
     @UuidGenerator
     @Column
     private UUID id;
-    @OneToOne
+
+    @OneToOne(fetch = FetchType.LAZY)
     private CreditOffer creditOffer;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate localDate;
 
