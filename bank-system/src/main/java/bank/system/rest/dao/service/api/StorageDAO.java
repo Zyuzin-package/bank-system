@@ -1,4 +1,4 @@
-package bank.system.rest.dao.api.service.api;
+package bank.system.rest.dao.service.api;
 
 import java.util.List;
 

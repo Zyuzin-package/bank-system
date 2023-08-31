@@ -1,4 +1,4 @@
-package bank.system.rest.dao.api.repository;
+package bank.system.rest.dao.repository;
 
 import bank.system.model.domain.PaymentEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
