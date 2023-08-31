@@ -17,7 +17,6 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-@ToString
 public class PaymentEvent {
     @Id
     @GeneratedValue
@@ -37,4 +36,14 @@ public class PaymentEvent {
 
     private double interestSum;
 
+    @Override
+    public String toString() {
+        return "PaymentEvent{" +
+                "id=" + id +
+                ", localDate=" + localDate +
+                ", paymentSum=" + paymentSum +
+                ", creditSum=" + creditSum +
+                ", interestSum=" + interestSum +
+                '}';
+    }
 }
