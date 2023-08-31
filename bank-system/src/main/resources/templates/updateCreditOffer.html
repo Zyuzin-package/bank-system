@@ -5,6 +5,42 @@
     <title>Update credit offers</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<form th:action="@{/creditsOffers/new}" method="post">
+    <table border="1" align="center">
+        <tr>
+            <td>
+                Client
+            </td>
+            <td>
+                <select th:name="clientId" id="clientId" name="clientId">
+                    <option th:each="client : ${clientList}"
+                            th:text="${client.passportID}"
+                            th:value="${client.id}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Credit
+            </td>
+            <td>
+                <select th:name="creditId" id="creditId" name="creditId">
+                    <option th:each="credit : ${creditList}"
+                            th:text="'Limit: '+ ${credit.limit} + ' Interest rate: ' + ${credit.interestRate}"
+                            th:value="${credit.id}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submit">Save</button>
+            </td>
+        </tr>
+    </table>
 
+</form>
 </body>
 </html>
