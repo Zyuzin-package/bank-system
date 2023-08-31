@@ -13,7 +13,6 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Credit {
@@ -25,5 +24,9 @@ public class Credit {
 
     private double limit;
     private double interestRate;
-
+    public Credit(UUID id, double limit, double interestRate) {
+        this.id = id;
+        this.limit = limit;
+        this.interestRate = interestRate;
+    }
 }
