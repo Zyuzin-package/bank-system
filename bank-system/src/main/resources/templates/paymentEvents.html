@@ -24,9 +24,6 @@
             <td>
                 Interest sum
             </td>
-            <td></td>
-            <td>
-            </td>
         </tr>
         <tr th:unless="${#lists.isEmpty(paymentEvents)}" th:each="paymentEvent : ${paymentEvents}">
             <td th:text="${paymentEvent.creditOffer.client.firstName}"></td>
@@ -34,8 +31,6 @@
             <td th:text="${paymentEvent.paymentSum}"></td>
             <td th:text="${paymentEvent.creditSum}"></td>
             <td th:text="${paymentEvent.interestSum}"></td>
-            <td><a th:href="@{/paymentEvents/edit/{id}(id=${paymentEvent.id})}">Edit</a></td>
-            <td><a th:href="@{/paymentEvents/remove/{id}(id=${paymentEvent.id})}">X</a></td>
         </tr>
         <tr>
             <td colspan="6" align="center">

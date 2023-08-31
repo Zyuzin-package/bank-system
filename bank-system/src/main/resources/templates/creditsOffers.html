@@ -24,6 +24,9 @@
             <td>
                 Interest rate
             </td>
+            <td>
+                Duration (in mount)
+            </td>
             <td></td>
             <td></td>
         </tr>
@@ -33,11 +36,13 @@
             <td th:text="${creditOffer.client.passportID}"></td>
             <td th:text="${creditOffer.credit.limit}"></td>
             <td th:text="${creditOffer.credit.interestRate}"></td>
+            <td th:text="${creditOffer.duration}"></td>
+            <td th:text="${creditOffer.paymentSum}"></td>
             <td><a th:href="@{/paymentEvents/{offerId}(offerId=${creditOffer.id})}">Payment events</a></td>
             <td><a th:href="@{/creditsOffers/remove/{id}(id=${creditOffer.id})}">X</a></td>
         </tr>
         <tr>
-            <td colspan="7" align="center">
+            <td colspan="9" align="center">
                 <a th:href="@{/creditsOffers/new}">
                     <button>Add</button>
                 </a>
