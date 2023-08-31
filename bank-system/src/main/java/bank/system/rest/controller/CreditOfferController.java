@@ -5,6 +5,9 @@ import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
 import bank.system.model.domain.PaymentEvent;
 import bank.system.rest.dao.service.api.StorageDAO;
+import bank.system.rest.dao.service.impl.ClientServiceImpl;
+import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;
+import bank.system.rest.dao.service.impl.CreditServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,21 +21,20 @@ import java.util.UUID;
 @Controller
 public class CreditOfferController {
 
-    private final StorageDAO<CreditOffer, UUID> creditOfferDAO;
-    private final StorageDAO<Credit, UUID> creditDAO;
-    private final StorageDAO<Client, UUID> clientDAO;
-    private final StorageDAO<PaymentEvent, UUID> paymentEventDAO;
+    private final CreditOfferServiceImpl creditOfferServiceImpl;
+    private final CreditServiceImpl creditServiceImpl;
+    private final ClientServiceImpl clientServiceImpl;
 
-    public CreditOfferController(StorageDAO<CreditOffer, UUID> creditOfferDAO, StorageDAO<Credit, UUID> creditDAO, StorageDAO<Client, UUID> clientDAO, StorageDAO<PaymentEvent, UUID> paymentEventDAO) {
-        this.creditOfferDAO = creditOfferDAO;
-        this.creditDAO = creditDAO;
-        this.clientDAO = clientDAO;
-        this.paymentEventDAO = paymentEventDAO;
+
+    public CreditOfferController(CreditOfferServiceImpl creditOfferServiceImpl, CreditServiceImpl creditServiceImpl, ClientServiceImpl clientServiceImpl) {
+        this.creditOfferServiceImpl = creditOfferServiceImpl;
+        this.creditServiceImpl = creditServiceImpl;
+        this.clientServiceImpl = clientServiceImpl;
     }
 
     @GetMapping("/creditsOffers")
     public String getCreditsOffers(Model model) {
-        List<CreditOffer> creditOffers = creditOfferDAO.getAll();
+        List<CreditOffer> creditOffers = creditOfferServiceImpl.getAll();
 
         model.addAttribute("creditOffers", creditOffers);
         return "creditsOffers";
@@ -40,8 +42,8 @@ public class CreditOfferController {
 
     @GetMapping("/creditsOffers/new")
     public String getCreatePage(Model model) {
-        List<Credit> creditList = creditDAO.getAll();
-        List<Client> clientList = clientDAO.getAll();
+        List<Credit> creditList = creditServiceImpl.getAll();
+        List<Client> clientList = clientServiceImpl.getAll();
 
         model.addAttribute("creditList", creditList);
         model.addAttribute("clientList", clientList);
@@ -52,7 +54,7 @@ public class CreditOfferController {
     @GetMapping("/creditsOffers/remove/{id}")
     public String remove(@PathVariable String id) {
 
-        creditOfferDAO.removeById(UUID.fromString(id));
+        creditOfferServiceImpl.removeById(UUID.fromString(id));
 
         return "redirect:/creditsOffers";
     }
@@ -62,10 +64,10 @@ public class CreditOfferController {
             @RequestParam(name = "creditId") String creditId,
             @RequestParam(name = "clientId") String clientId) {
         CreditOffer creditOffer = CreditOffer.builder()
-                .credit(creditDAO.findById(UUID.fromString(creditId)))
-                .client(clientDAO.findById(UUID.fromString(clientId)))
+                .credit(creditServiceImpl.findById(UUID.fromString(creditId)))
+                .client(clientServiceImpl.findById(UUID.fromString(clientId)))
                 .build();
-        creditOfferDAO.save(creditOffer);
+        creditOfferServiceImpl.save(creditOffer);
 
         return "redirect:/creditsOffers";
     }

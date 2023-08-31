@@ -2,6 +2,7 @@ package bank.system.rest.controller;
 
 import bank.system.model.domain.Credit;
 import bank.system.rest.dao.service.api.StorageDAO;
+import bank.system.rest.dao.service.impl.CreditServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,17 +15,15 @@ import java.util.UUID;
 
 @Controller
 public class CreditController {
-    private StorageDAO<Credit, UUID> storageDAO;
+    private CreditServiceImpl creditServiceImpl;
 
-    public CreditController(StorageDAO<Credit, UUID> storageDAO) {
-        this.storageDAO = storageDAO;
+    public CreditController(CreditServiceImpl creditServiceImpl) {
+        this.creditServiceImpl = creditServiceImpl;
     }
 
     @GetMapping("/credits")
     public String getCredits(Model model) {
-        List<Credit> creditList = storageDAO.getAll();
-
-        System.out.println(creditList.toString());
+        List<Credit> creditList = creditServiceImpl.getAll();
 
         model.addAttribute("credits", creditList);
         return "credits";
@@ -39,8 +38,7 @@ public class CreditController {
 
     @GetMapping("/credits/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
-
-        Credit credit = storageDAO.findById(UUID.fromString(id));
+        Credit credit = creditServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("credit", Objects.requireNonNullElseGet(credit, Credit::new));
 
         return "updateCredit";
@@ -48,7 +46,7 @@ public class CreditController {
 
     @GetMapping("/credits/remove/{id}")
     public String remove(@PathVariable String id) {
-        storageDAO.removeById(UUID.fromString(id));
+        creditServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/credits";
     }
 
@@ -56,9 +54,9 @@ public class CreditController {
     @PostMapping("/credits/new")
     public String merge(Credit credit) {
         if(credit.getId() == null) {
-            storageDAO.save(credit);
+            creditServiceImpl.save(credit);
         } else {
-            storageDAO.update(credit);
+            creditServiceImpl.update(credit);
         }
         return "redirect:/credits";
     }

@@ -57,4 +57,7 @@ public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
         return true;
     }
 
+    public List<PaymentEvent> getPaymentEventByOfferId(String id){
+        return paymentEventRepository.getPaymentEventByOfferId(UUID.fromString(id));
+    }
 }
