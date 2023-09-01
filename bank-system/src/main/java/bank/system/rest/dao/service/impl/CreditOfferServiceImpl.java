@@ -71,14 +71,13 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     }
 
     @Override
-    public boolean remove(CreditOffer creditOffer) {
+    public void remove(CreditOffer creditOffer) {
         creditOfferRepository.delete(creditOffer);
-        return true;
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
-    public boolean removeById(UUID uuid) {
+    public void removeById(UUID uuid) {
         CreditOffer creditOffer = findById(uuid);
 
         for (PaymentEvent p : creditOffer.getPaymentEventList()) {
@@ -86,7 +85,6 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         }
 
         creditOfferRepository.deleteById(uuid);
-        return true;
     }
 
     private List<PaymentEvent> buildPaymentGraph(CreditOffer creditOffer) {

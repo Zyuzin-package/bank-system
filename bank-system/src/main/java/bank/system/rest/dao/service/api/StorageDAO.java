@@ -7,6 +7,6 @@ public interface StorageDAO<T,I> {
     List<T> getAll();
     T findById(I id);
     T update(T t);
-    boolean remove(T t);
-    boolean removeById(I id);
+    void remove(T t);
+    void removeById(I id);
 }

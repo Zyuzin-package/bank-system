@@ -49,15 +49,13 @@ public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
     }
 
     @Override
-    public boolean remove(PaymentEvent paymentEvent) {
+    public void remove(PaymentEvent paymentEvent) {
         paymentEventRepository.delete(paymentEvent);
-        return true;
     }
 
     @Override
-    public boolean removeById(UUID uuid) {
+    public void removeById(UUID uuid) {
         paymentEventRepository.deleteById(uuid);
-        return true;
     }
 
     public List<PaymentEvent> getPaymentEventByOfferId(String id){

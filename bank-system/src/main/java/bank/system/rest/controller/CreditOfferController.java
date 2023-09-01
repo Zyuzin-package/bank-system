@@ -3,17 +3,12 @@ package bank.system.rest.controller;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
-import bank.system.model.domain.PaymentEvent;
-import bank.system.rest.dao.service.api.StorageDAO;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -62,13 +57,11 @@ public class CreditOfferController {
             @RequestParam(name = "creditId") String creditId,
             @RequestParam(name = "clientId") String clientId,
             @RequestParam(name = "duration") Integer duration,
-            @RequestParam(name = "fullsum") String fullsum
-    ) {
+            @RequestParam(name = "fullsum") String fullsum,
+            Model model
+    ){
         Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
-        if(Double.parseDouble(fullsum) > credit.getLimit()){
-
-        }
 
         CreditOffer creditOffer = CreditOffer.builder()
                 .credit(credit)

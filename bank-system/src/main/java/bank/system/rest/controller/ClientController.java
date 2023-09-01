@@ -2,10 +2,12 @@ package bank.system.rest.controller;
 
 
 import bank.system.model.domain.Client;
+import bank.system.model.exception.EntityNotFoundException;
 import bank.system.rest.dao.service.api.StorageDAO;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,10 +41,8 @@ public class ClientController {
 
     @GetMapping("/clients/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
-
         Client client = clientServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("client", Objects.requireNonNullElseGet(client, Client::new));
-
         return "updateClient";
     }
 
@@ -54,12 +54,11 @@ public class ClientController {
 
     @PostMapping("/clients/new")
     public String merge(Client client, Model model) {
-        if(client.getId() == null) {
+        if (client.getId() == null) {
             clientServiceImpl.save(client);
         } else {
             clientServiceImpl.update(client);
         }
         return "redirect:/clients";
     }
-
 }

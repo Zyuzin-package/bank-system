@@ -51,14 +51,13 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
     }
 
     @Override
-    public boolean remove(Credit credit) {
+    public void remove(Credit credit) {
         creditRepository.delete(credit);
-        return true;
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
-    public boolean removeById(UUID uuid) {
+    public void removeById(UUID uuid) {
         CreditOffer creditOffer = creditOfferService.findByCredit(uuid);
 
         if (creditOffer != null) {
@@ -66,6 +65,5 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
         }
 
         creditRepository.deleteById(uuid);
-        return true;
     }
 }
