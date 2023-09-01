@@ -8,6 +8,4 @@ import java.util.UUID;
 
 public interface ClientRepository extends JpaRepository<Client, UUID> {
 
-    Client findByPassportID(@Param("passportid") String id);
-
 }

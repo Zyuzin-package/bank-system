@@ -1,22 +1,27 @@
 package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.Client;
+import bank.system.model.domain.CreditOffer;
 import bank.system.rest.dao.repository.ClientRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ClientServiceImpl implements StorageDAO<Client,UUID> {
+public class ClientServiceImpl implements StorageDAO<Client, UUID> {
 
     private final ClientRepository clientRepository;
+    private final CreditOfferServiceImpl creditOfferService;
 
-    @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository) {
+
+    public ClientServiceImpl(ClientRepository clientRepository, CreditOfferServiceImpl creditOfferService) {
         this.clientRepository = clientRepository;
+        this.creditOfferService = creditOfferService;
     }
 
     @Override
@@ -36,9 +41,8 @@ public class ClientServiceImpl implements StorageDAO<Client,UUID> {
 
     @Override
     public Client update(Client client) {
-        System.out.println("\n\n"+ client);
 
-        Client savedClient = clientRepository.findByPassportID(client.getPassportID());
+        Client savedClient = clientRepository.findById(client.getId()).orElse(null);
 
         if (savedClient == null) {
             throw new RuntimeException("Client not found");
@@ -56,7 +60,14 @@ public class ClientServiceImpl implements StorageDAO<Client,UUID> {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
     public boolean removeById(UUID uuid) {
+        CreditOffer creditOffer = creditOfferService.findByClient(uuid);
+
+        if (creditOffer != null) {
+            creditOfferService.removeById(creditOffer.getId());
+        }
+
         clientRepository.deleteById(uuid);
         return true;
     }

@@ -7,8 +7,10 @@ import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     private final CreditOfferRepository creditOfferRepository;
     private final PaymentEventServiceImpl paymentEventService;
 
+    private static final double scale = 100.0;
 
     public CreditOfferServiceImpl(CreditOfferRepository creditOfferRepository, PaymentEventServiceImpl paymentEventService) {
         this.creditOfferRepository = creditOfferRepository;
@@ -35,9 +38,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         List<PaymentEvent> savedGraph = paymentEventService.bulkSave(paymentGraph);
         creditOffer.setPaymentEventList(savedGraph);
 
-        CreditOffer saved = creditOfferRepository.save(creditOffer);
-
-        return saved;
+        return creditOfferRepository.save(creditOffer);
     }
 
     @Override
@@ -48,6 +49,14 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     @Override
     public CreditOffer findById(UUID uuid) {
         return creditOfferRepository.findById(uuid).orElse(null);
+    }
+
+    public CreditOffer findByClient(UUID uuid) {
+        return creditOfferRepository.findCreditOfferByClientId(uuid);
+    }
+
+    public CreditOffer findByCredit(UUID uuid) {
+        return creditOfferRepository.findCreditOfferByCreditId(uuid);
     }
 
     @Override
@@ -68,11 +77,11 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
     public boolean removeById(UUID uuid) {
         CreditOffer creditOffer = findById(uuid);
 
-        for (PaymentEvent p: creditOffer.getPaymentEventList()){
+        for (PaymentEvent p : creditOffer.getPaymentEventList()) {
             paymentEventService.removeById(p.getId());
         }
 
@@ -90,21 +99,24 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         double temp = percent / (100 * 12);
 
         double PaymentPerMount = sum * (temp / (1 - Math.pow(1 + temp, -duration)));
-        double t = PaymentPerMount*duration;
+        double t = PaymentPerMount * duration;
         for (int i = 1; i <= duration; i++) {
             double creditSum = (t * (percent / 100) * 30) / 365;
             t = t - PaymentPerMount;
 
             paymentEvents.add(PaymentEvent.builder()
                     .creditOffer(creditOffer)
-                    .creditSum(PaymentPerMount-creditSum)
-                    .paymentSum(PaymentPerMount)
-                    .interestSum(creditSum)
+                    .creditSum(rounding(PaymentPerMount - creditSum))
+                    .paymentSum(rounding(PaymentPerMount))
+                    .interestSum(rounding(creditSum))
                     .localDate(localDate.plusMonths(i))
                     .build());
-            System.out.println(i);
         }
 
         return paymentEvents;
+    }
+
+    private double rounding(double d) {
+        return Math.round(d * scale) / scale;
     }
 }

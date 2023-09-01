@@ -54,7 +54,6 @@ public class CreditOfferController {
     @GetMapping("/creditsOffers/remove/{id}")
     public String remove(@PathVariable String id) {
         creditOfferServiceImpl.removeById(UUID.fromString(id));
-
         return "redirect:/creditsOffers";
     }
 
@@ -65,8 +64,14 @@ public class CreditOfferController {
             @RequestParam(name = "duration") Integer duration,
             @RequestParam(name = "fullsum") String fullsum
     ) {
+        Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
+
+        if(Double.parseDouble(fullsum) > credit.getLimit()){
+
+        }
+
         CreditOffer creditOffer = CreditOffer.builder()
-                .credit(creditServiceImpl.findById(UUID.fromString(creditId)))
+                .credit(credit)
                 .client(clientServiceImpl.findById(UUID.fromString(clientId)))
                 .duration(duration)
                 .paymentSum(Double.parseDouble(fullsum))
