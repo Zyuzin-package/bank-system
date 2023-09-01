@@ -54,6 +54,7 @@ public class ClientController {
 
     @PostMapping("/clients/new")
     public String merge(Client client, Model model) {
+        
         if (client.getId() == null) {
             clientServiceImpl.save(client);
         } else {
