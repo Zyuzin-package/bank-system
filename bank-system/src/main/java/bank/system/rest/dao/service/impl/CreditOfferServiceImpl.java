@@ -5,6 +5,7 @@ import bank.system.model.domain.PaymentEvent;
 import bank.system.rest.dao.repository.CreditOfferRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,8 +23,8 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     private final CreditOfferRepository creditOfferRepository;
     private final PaymentEventServiceImpl paymentEventService;
-
-    private static final double scale = 100.0;
+    @Value("${bank.credit-offer.scale}")
+    private double scale;
 
     public CreditOfferServiceImpl(CreditOfferRepository creditOfferRepository, PaymentEventServiceImpl paymentEventService) {
         this.creditOfferRepository = creditOfferRepository;

@@ -5,3 +5,5 @@ bank:
   credit:
     max-limit: 10000000
     min-interest-rate: 5
+  credit-offer:
+    scale: 100.0
