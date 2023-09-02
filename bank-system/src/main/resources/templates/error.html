@@ -60,8 +60,18 @@
     </div>
     <div class="err2">r</div>
     <div class="msg" th:if="${errorTemplate != null}" >
-            <p th:text="${errorTemplate}"></p>
-           <a class="text-primary" style="cursor: pointer; text-decoration: underline;" onclick=" history.back();">back</a>
+        <table>
+            <tr th:each="error : ${errorTemplate}">
+                <td th:text="${error}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="text-primary" style="cursor: pointer; text-decoration: underline;" onclick=" history.back();">back</a>
+                </td>
+            </tr>
+        </table>
+
+
 
     </div>
     <div class="msg" th:unless="${errorTemplate != null}" >

@@ -3,6 +3,8 @@ package bank.system.rest.controller;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.model.exception.ValidationException;
+import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
@@ -20,11 +22,13 @@ public class CreditOfferController {
     private final CreditServiceImpl creditServiceImpl;
     private final ClientServiceImpl clientServiceImpl;
 
+    private final Validator validator;
 
-    public CreditOfferController(CreditOfferServiceImpl creditOfferServiceImpl, CreditServiceImpl creditServiceImpl, ClientServiceImpl clientServiceImpl) {
+    public CreditOfferController(CreditOfferServiceImpl creditOfferServiceImpl, CreditServiceImpl creditServiceImpl, ClientServiceImpl clientServiceImpl, Validator validator) {
         this.creditOfferServiceImpl = creditOfferServiceImpl;
         this.creditServiceImpl = creditServiceImpl;
         this.clientServiceImpl = clientServiceImpl;
+        this.validator = validator;
     }
 
     @GetMapping("/creditsOffers")
@@ -48,6 +52,11 @@ public class CreditOfferController {
 
     @GetMapping("/creditsOffers/remove/{id}")
     public String remove(@PathVariable String id) {
+        String validErrors = validator.uuidValidator(id);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         creditOfferServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/creditsOffers";
     }
@@ -60,6 +69,16 @@ public class CreditOfferController {
             @RequestParam(name = "fullsum") String fullsum,
             Model model
     ){
+        String creditIdValidation = validator.uuidValidator(creditId);
+        if (creditIdValidation != null) {
+            throw new ValidationException(creditIdValidation);
+        }
+
+        String clientIdValidation = validator.uuidValidator(clientId);
+        if (clientIdValidation != null) {
+            throw new ValidationException(clientIdValidation);
+        }
+
         Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
 
@@ -69,6 +88,12 @@ public class CreditOfferController {
                 .duration(duration)
                 .paymentSum(Double.parseDouble(fullsum))
                 .build();
+
+        String validErrors = validator.creditOfferValidation(creditOffer);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         creditOfferServiceImpl.save(creditOffer);
 
 

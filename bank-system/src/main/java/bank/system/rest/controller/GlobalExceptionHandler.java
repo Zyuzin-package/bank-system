@@ -1,18 +1,30 @@
 package bank.system.rest.controller;
 
 import bank.system.model.exception.EntityNotFoundException;
+import bank.system.model.exception.ValidationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     
-    @ExceptionHandler({EntityNotFoundException.class})
-    public String get(Model model, EntityNotFoundException e){
-        model.addAttribute("errorTemplate", e.getMessage());
+    @ExceptionHandler({EntityNotFoundException.class, ValidationException.class})
+    public String customException(Model model, Exception e){
+        List<String> errors = List.of(e.getMessage().split("\\|"));
+        model.addAttribute("errorTemplate", errors);
         return "error";
     }
+
+    @ExceptionHandler(Exception.class)
+    public String defaultException(Model model){
+        model.addAttribute("errorTemplate","Server error");
+        return "error";
+    }
+
 }

@@ -1,6 +1,8 @@
 package bank.system.rest.controller;
 
 import bank.system.model.domain.Credit;
+import bank.system.model.exception.ValidationException;
+import bank.system.rest.Validator;
 import bank.system.rest.dao.service.api.StorageDAO;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,12 @@ import java.util.UUID;
 
 @Controller
 public class CreditController {
-    private CreditServiceImpl creditServiceImpl;
+    private final CreditServiceImpl creditServiceImpl;
+    private final Validator validator;
 
-    public CreditController(CreditServiceImpl creditServiceImpl) {
+    public CreditController(CreditServiceImpl creditServiceImpl, Validator validator) {
         this.creditServiceImpl = creditServiceImpl;
+        this.validator = validator;
     }
 
     @GetMapping("/credits")
@@ -38,6 +42,11 @@ public class CreditController {
 
     @GetMapping("/credits/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
+        String validErrors = validator.uuidValidator(id);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         Credit credit = creditServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("credit", Objects.requireNonNullElseGet(credit, Credit::new));
 
@@ -46,6 +55,11 @@ public class CreditController {
 
     @GetMapping("/credits/remove/{id}")
     public String remove(@PathVariable String id) {
+        String validErrors = validator.uuidValidator(id);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         creditServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/credits";
     }
@@ -53,6 +67,11 @@ public class CreditController {
 
     @PostMapping("/credits/new")
     public String merge(Credit credit) {
+        String validErrors = validator.creditValidation(credit);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         if(credit.getId() == null) {
             creditServiceImpl.save(credit);
         } else {

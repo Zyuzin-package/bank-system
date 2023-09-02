@@ -3,6 +3,8 @@ package bank.system.rest.controller;
 
 import bank.system.model.domain.Client;
 import bank.system.model.exception.EntityNotFoundException;
+import bank.system.model.exception.ValidationException;
+import bank.system.rest.Validator;
 import bank.system.rest.dao.service.api.StorageDAO;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -20,8 +22,11 @@ import java.util.UUID;
 public class ClientController {
     private final ClientServiceImpl clientServiceImpl;
 
-    public ClientController(ClientServiceImpl clientServiceImpl) {
+    private final Validator validator;
+
+    public ClientController(ClientServiceImpl clientServiceImpl, Validator validator) {
         this.clientServiceImpl = clientServiceImpl;
+        this.validator = validator;
     }
 
     @GetMapping("/clients")
@@ -41,6 +46,11 @@ public class ClientController {
 
     @GetMapping("/clients/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
+        String validErrors = validator.uuidValidator(id);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         Client client = clientServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("client", Objects.requireNonNullElseGet(client, Client::new));
         return "updateClient";
@@ -48,13 +58,22 @@ public class ClientController {
 
     @GetMapping("/clients/remove/{id}")
     public String remove(@PathVariable String id, Model model) {
+        String validErrors = validator.uuidValidator(id);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         clientServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/clients";
     }
 
     @PostMapping("/clients/new")
     public String merge(Client client, Model model) {
-        
+        String validErrors = validator.clientValidation(client);
+        if (validErrors != null) {
+            throw new ValidationException(validErrors);
+        }
+
         if (client.getId() == null) {
             clientServiceImpl.save(client);
         } else {
