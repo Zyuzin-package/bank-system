@@ -2,7 +2,7 @@ package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
-import bank.system.model.exception.EntityNotFoundException;
+import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;

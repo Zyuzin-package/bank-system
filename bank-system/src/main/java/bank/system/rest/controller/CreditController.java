@@ -1,9 +1,8 @@
 package bank.system.rest.controller;
 
 import bank.system.model.domain.Credit;
-import bank.system.model.exception.ValidationException;
+import bank.system.rest.exception.ValidationException;
 import bank.system.rest.Validator;
-import bank.system.rest.dao.service.api.StorageDAO;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

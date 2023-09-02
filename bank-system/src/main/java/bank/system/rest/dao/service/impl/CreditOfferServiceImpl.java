@@ -2,17 +2,15 @@ package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.CreditOffer;
 import bank.system.model.domain.PaymentEvent;
-import bank.system.model.exception.EntityNotFoundException;
+import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditOfferRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

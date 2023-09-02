@@ -1,4 +1,4 @@
-package bank.system.model.exception;
+package bank.system.rest.exception;
 
 import javax.persistence.PersistenceException;
 

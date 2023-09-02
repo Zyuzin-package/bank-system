@@ -3,7 +3,7 @@ package bank.system.rest.controller;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
-import bank.system.model.exception.ValidationException;
+import bank.system.rest.exception.ValidationException;
 import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;

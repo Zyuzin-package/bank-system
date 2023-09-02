@@ -1,13 +1,12 @@
 package bank.system.rest.controller;
 
-import bank.system.model.exception.EntityNotFoundException;
-import bank.system.model.exception.ValidationException;
+import bank.system.rest.exception.EntityNotFoundException;
+import bank.system.rest.exception.ValidationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Arrays;
 import java.util.List;
 
 
