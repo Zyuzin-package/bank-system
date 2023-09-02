@@ -2,6 +2,7 @@ package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.model.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
         Credit savedCredit = creditRepository.findById(credit.getId()).orElse(null);
 
         if (savedCredit == null) {
-            throw new RuntimeException("Credit not found");
+            throw new EntityNotFoundException("Credit with id: " + credit.getId() + " not found");
         }
 
         return creditRepository.save(credit);

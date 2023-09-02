@@ -2,6 +2,7 @@ package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.CreditOffer;
 import bank.system.model.domain.PaymentEvent;
+import bank.system.model.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditOfferRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +50,23 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     @Override
     public CreditOffer findById(UUID uuid) {
-        return creditOfferRepository.findById(uuid).orElse(null);
+        return creditOfferRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Client with id: " + uuid + " not found"));
     }
 
     public CreditOffer findByClient(UUID uuid) {
-        return creditOfferRepository.findCreditOfferByClientId(uuid);
+        CreditOffer offer = creditOfferRepository.findCreditOfferByClientId(uuid);
+        if(offer==null){
+            throw new EntityNotFoundException("CreditOffer with client id: " + uuid + " not found");
+        }
+        return offer;
     }
 
     public CreditOffer findByCredit(UUID uuid) {
-        return creditOfferRepository.findCreditOfferByCreditId(uuid);
+        CreditOffer offer = creditOfferRepository.findCreditOfferByCreditId(uuid);
+        if(offer==null){
+            throw new EntityNotFoundException("CreditOffer by with credit id: " + uuid + " not found");
+        }
+        return offer;
     }
 
     @Override
@@ -65,7 +74,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         CreditOffer savedOffer = creditOfferRepository.findById(creditOffer.getId()).orElse(null);
 
         if (savedOffer == null) {
-            throw new RuntimeException("CreditOffer not found");
+            throw new EntityNotFoundException("CreditOffer by with credit id: " + creditOffer.getId() + " not found");
         }
 
         return creditOfferRepository.save(creditOffer);
@@ -80,6 +89,9 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
     public void removeById(UUID uuid) {
         CreditOffer creditOffer = findById(uuid);
+        if (creditOffer == null) {
+            throw new EntityNotFoundException("CreditOffer by with id: " + uuid + " not found");
+        }
 
         for (PaymentEvent p : creditOffer.getPaymentEventList()) {
             paymentEventService.removeById(p.getId());

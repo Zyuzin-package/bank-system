@@ -1,6 +1,7 @@
 package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.PaymentEvent;
+import bank.system.model.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.PaymentEventRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
+public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent, UUID> {
 
     private final PaymentEventRepository paymentEventRepository;
 
@@ -34,7 +35,7 @@ public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
 
     @Override
     public PaymentEvent findById(UUID uuid) {
-        return paymentEventRepository.findById(uuid).orElse(null);
+        return paymentEventRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Payment event with id: " + uuid + " not found"));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
         PaymentEvent SavedPaymentEvent = paymentEventRepository.findById(paymentEvent.getId()).orElse(null);
 
         if (SavedPaymentEvent == null) {
-            throw new RuntimeException("Payment event not found");
+            throw new EntityNotFoundException("Payment event with id: " + paymentEvent.getId() + " not found");
         }
 
         return paymentEventRepository.save(paymentEvent);
@@ -54,18 +55,29 @@ public class PaymentEventServiceImpl implements StorageDAO<PaymentEvent,UUID> {
     }
 
     @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void removeById(UUID uuid) {
+        PaymentEvent SavedPaymentEvent = paymentEventRepository.findById(uuid).orElse(null);
+
+        if (SavedPaymentEvent == null) {
+            throw new EntityNotFoundException("Payment event with id: " + uuid + " not found");
+        }
+
         paymentEventRepository.deleteById(uuid);
     }
 
-    public List<PaymentEvent> getPaymentEventByOfferId(String id){
-        return paymentEventRepository.getPaymentEventByOfferId(UUID.fromString(id));
+    public List<PaymentEvent> getPaymentEventByOfferId(String id) {
+        List<PaymentEvent> paymentEvents =paymentEventRepository.getPaymentEventByOfferId(UUID.fromString(id));
+        if(paymentEvents.isEmpty()){
+            throw new EntityNotFoundException("Payment events with offer id: " + id + " not found");
+        }
+        return paymentEvents;
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public List<PaymentEvent> bulkSave(List<PaymentEvent> paymentEvents){
+    public List<PaymentEvent> bulkSave(List<PaymentEvent> paymentEvents) {
         List<PaymentEvent> saved = new ArrayList<>();
-        for (PaymentEvent p: paymentEvents){
+        for (PaymentEvent p : paymentEvents) {
             saved.add(save(p));
         }
         return saved;
