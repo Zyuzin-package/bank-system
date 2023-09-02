@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @Controller
 public class ClientController {
+
     private final ClientServiceImpl clientServiceImpl;
 
     private final Validator validator;

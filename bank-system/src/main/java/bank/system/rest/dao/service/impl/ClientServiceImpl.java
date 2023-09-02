@@ -5,6 +5,8 @@ import bank.system.model.domain.CreditOffer;
 import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.ClientRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
+import org.hibernate.annotations.Fetch;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,11 +19,10 @@ import java.util.UUID;
 public class ClientServiceImpl implements StorageDAO<Client, UUID> {
 
     private final ClientRepository clientRepository;
+    @Lazy
     private final CreditOfferServiceImpl creditOfferService;
 
-
-
-    public ClientServiceImpl(ClientRepository clientRepository, CreditOfferServiceImpl creditOfferService) {
+    public ClientServiceImpl(ClientRepository clientRepository, @Lazy CreditOfferServiceImpl creditOfferService) {
         this.clientRepository = clientRepository;
         this.creditOfferService = creditOfferService;
     }
@@ -37,7 +38,7 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
     }
 
     @Override
-    public Client findById(UUID uuid) throws EntityNotFoundException{
+    public Client findById(UUID uuid) throws EntityNotFoundException {
         return clientRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Client with id: " + uuid + " not found"));
     }
 

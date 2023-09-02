@@ -28,9 +28,11 @@ public class CreditOffer {
     private UUID id;
 
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Client client;
     private double paymentSum;
     @OneToOne(fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Credit credit;
     private int duration;
     @OneToMany

@@ -35,5 +35,13 @@ public class ClientRepositoryTest {
 
         assertEquals(savedClient.getFirstName(), client.getFirstName());
     }
+    @Test
+    public void saveClientNegativeTest() {
+        Client client = Client.builder()
+                .email("korkWake@mail.ru")
+                .build();
+        Client savedClient = clientRepository.save(client);
 
+        assertEquals(savedClient.getFirstName(), client.getFirstName());
+    }
 }

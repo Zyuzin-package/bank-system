@@ -1,11 +1,14 @@
 package bank.system.rest.dao.service.impl;
 
+import bank.system.model.domain.Client;
+import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
 import bank.system.model.domain.PaymentEvent;
 import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditOfferRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,21 +25,34 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     private final CreditOfferRepository creditOfferRepository;
     private final PaymentEventServiceImpl paymentEventService;
+
+    private final CreditServiceImpl creditService;
+    private final ClientServiceImpl clientService;
     @Value("${bank.credit-offer.scale}")
     private double scale;
 
-    public CreditOfferServiceImpl(CreditOfferRepository creditOfferRepository, PaymentEventServiceImpl paymentEventService) {
+    public CreditOfferServiceImpl(CreditOfferRepository creditOfferRepository,
+                                  PaymentEventServiceImpl paymentEventService,
+                                  @Lazy CreditServiceImpl creditService,
+                                  @Lazy ClientServiceImpl clientService) {
         this.creditOfferRepository = creditOfferRepository;
         this.paymentEventService = paymentEventService;
+        this.creditService = creditService;
+        this.clientService = clientService;
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public CreditOffer save(CreditOffer creditOffer) {
+
+        creditService.save(creditOffer.getCredit());
+        clientService.save(creditOffer.getClient());
+
         List<PaymentEvent> paymentGraph = buildPaymentGraph(creditOffer);
 
         List<PaymentEvent> savedGraph = paymentEventService.bulkSave(paymentGraph);
         creditOffer.setPaymentEventList(savedGraph);
+
 
         return creditOfferRepository.save(creditOffer);
     }
@@ -53,7 +69,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     public CreditOffer findByClient(UUID uuid) {
         CreditOffer offer = creditOfferRepository.findCreditOfferByClientId(uuid);
-        if(offer==null){
+        if (offer == null) {
             throw new EntityNotFoundException("CreditOffer with client id: " + uuid + " not found");
         }
         return offer;
@@ -61,7 +77,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     public CreditOffer findByCredit(UUID uuid) {
         CreditOffer offer = creditOfferRepository.findCreditOfferByCreditId(uuid);
-        if(offer==null){
+        if (offer == null) {
             throw new EntityNotFoundException("CreditOffer by with credit id: " + uuid + " not found");
         }
         return offer;

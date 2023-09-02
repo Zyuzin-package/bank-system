@@ -6,6 +6,7 @@ import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
 
     private final CreditRepository creditRepository;
+    @Lazy
     private final CreditOfferServiceImpl creditOfferService;
     @Autowired
     public CreditServiceImpl(CreditRepository creditRepository, CreditOfferServiceImpl creditOfferService) {
