@@ -43,10 +43,7 @@ public class ClientController {
 
     @GetMapping("/clients/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
-        String validErrors = validator.uuidValidator(id);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.uuidValidator(id);
 
         Client client = clientServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("client", Objects.requireNonNullElseGet(client, Client::new));
@@ -55,10 +52,7 @@ public class ClientController {
 
     @GetMapping("/clients/remove/{id}")
     public String remove(@PathVariable String id, Model model) {
-        String validErrors = validator.uuidValidator(id);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.uuidValidator(id);
 
         clientServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/clients";
@@ -66,10 +60,7 @@ public class ClientController {
 
     @PostMapping("/clients/new")
     public String merge(Client client, Model model) {
-        String validErrors = validator.clientValidation(client);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.clientValidation(client);
 
         if (client.getId() == null) {
             clientServiceImpl.save(client);

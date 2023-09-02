@@ -25,10 +25,7 @@ public class PaymentEventController {
 
     @GetMapping("/paymentEvents/{offerId}")
     public String getPaymentsEvents(Model model, @PathVariable String offerId) {
-        String validErrors = validator.uuidValidator(offerId);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.uuidValidator(offerId);
 
         List<PaymentEvent> paymentEvents = paymentEventServiceImpl.getPaymentEventByOfferId(offerId);
 

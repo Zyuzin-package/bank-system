@@ -52,10 +52,8 @@ public class CreditOfferController {
 
     @GetMapping("/creditsOffers/remove/{id}")
     public String remove(@PathVariable String id) {
-        String validErrors = validator.uuidValidator(id);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.uuidValidator(id);
+
 
         creditOfferServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/creditsOffers";
@@ -69,15 +67,8 @@ public class CreditOfferController {
             @RequestParam(name = "fullsum") String fullsum,
             Model model
     ){
-        String creditIdValidation = validator.uuidValidator(creditId);
-        if (creditIdValidation != null) {
-            throw new ValidationException(creditIdValidation);
-        }
-
-        String clientIdValidation = validator.uuidValidator(clientId);
-        if (clientIdValidation != null) {
-            throw new ValidationException(clientIdValidation);
-        }
+        validator.uuidValidator(creditId);
+        validator.uuidValidator(clientId);
 
         Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
@@ -89,10 +80,7 @@ public class CreditOfferController {
                 .paymentSum(Double.parseDouble(fullsum))
                 .build();
 
-        String validErrors = validator.creditOfferValidation(creditOffer);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.creditOfferValidation(creditOffer);
 
         creditOfferServiceImpl.save(creditOffer);
 

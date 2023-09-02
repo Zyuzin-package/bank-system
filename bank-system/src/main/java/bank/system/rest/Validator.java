@@ -3,6 +3,7 @@ package bank.system.rest;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.rest.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class Validator {
     @Value("${bank.credit.min-interest-rate}")
     double minInterestRate;
 
-    public String clientValidation(Client client) {
+    public boolean clientValidation(Client client) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
@@ -23,7 +24,7 @@ public class Validator {
         if (email == null) {
             errorMessage.append("email must be not be empty|");
         } else if (!email.matches("^[A-Za-z0-9_.-]+@[a-z0-9-]+(\\.[a-z]{2,6})$")) {
-            errorMessage.append("email should be correct value\n");
+            errorMessage.append("email should be correct value|");
         }
 
         String fName = client.getFirstName();
@@ -56,11 +57,13 @@ public class Validator {
             errorMessage.append("passport id must match the pattern: **-**-******|");
             noError = false;
         }
-
-        return noError ? null : errorMessage.toString();
+        if(noError == false){
+            throw new ValidationException(errorMessage.toString());
+        }
+        return true;
     }
 
-    public String creditValidation(Credit credit) {
+    public boolean creditValidation(Credit credit) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
@@ -78,16 +81,18 @@ public class Validator {
             errorMessage.append("interest rate must be positive|");
             noError = false;
         } else {
-            if (credit.getInterestRate() > minInterestRate) {
-                errorMessage.append("interest rate  must be over ").append(minInterestRate).append("|");
+            if (credit.getInterestRate() < minInterestRate) {
+                errorMessage.append("interest rate must be over ").append(minInterestRate).append("|");
                 noError = false;
             }
         }
-
-        return noError ? null : errorMessage.toString();
+        if(noError == false){
+            throw new ValidationException(errorMessage.toString());
+        }
+        return true;
     }
 
-    public String creditOfferValidation(CreditOffer creditOffer) {
+    public boolean creditOfferValidation(CreditOffer creditOffer) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
@@ -95,15 +100,13 @@ public class Validator {
             errorMessage.append("credit offer must have credit|");
             noError = false;
         } else {
-            String creditErrorMessage = creditValidation(creditOffer.getCredit());
-            if (creditErrorMessage != null) {
-                errorMessage.append(creditErrorMessage);
+            if (!creditValidation(creditOffer.getCredit())) {
                 noError = false;
             }
         }
 
         if (creditOffer.getDuration() <= 0) {
-            errorMessage.append("interest rate must be not be positive|");
+            errorMessage.append("credit offer duration must be positive|");
             noError = false;
         }
         if (creditOffer.getPaymentSum() <= 0) {
@@ -116,20 +119,21 @@ public class Validator {
             }
         }
         if (creditOffer.getClient() == null) {
-            errorMessage.append("Credit offer must have client|");
+            errorMessage.append("credit offer must have client|");
             noError = false;
         } else {
-            String clientErrorMessage = clientValidation(creditOffer.getClient());
-            if (clientErrorMessage != null) {
-                errorMessage.append(clientErrorMessage);
+            if (!clientValidation(creditOffer.getClient())) {
                 noError = false;
             }
         }
 
-        return noError ? null : errorMessage.toString();
+        if(noError == false){
+            throw new ValidationException(errorMessage.toString());
+        }
+        return true;
     }
 
-    public String uuidValidator(String uuid) {
+    public boolean uuidValidator(String uuid) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
         if (uuid != null) {
@@ -141,6 +145,9 @@ public class Validator {
             errorMessage.append("Incorrect id|");
             noError = false;
         }
-        return noError ? null : errorMessage.toString();
+        if(noError == false){
+            throw new ValidationException(errorMessage.toString());
+        }
+        return true;
     }
 }

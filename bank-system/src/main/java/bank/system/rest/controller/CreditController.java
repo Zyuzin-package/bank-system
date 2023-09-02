@@ -41,10 +41,7 @@ public class CreditController {
 
     @GetMapping("/credits/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
-        String validErrors = validator.uuidValidator(id);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.uuidValidator(id);
 
         Credit credit = creditServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("credit", Objects.requireNonNullElseGet(credit, Credit::new));
@@ -54,10 +51,7 @@ public class CreditController {
 
     @GetMapping("/credits/remove/{id}")
     public String remove(@PathVariable String id) {
-        String validErrors = validator.uuidValidator(id);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.uuidValidator(id);
 
         creditServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/credits";
@@ -66,10 +60,7 @@ public class CreditController {
 
     @PostMapping("/credits/new")
     public String merge(Credit credit) {
-        String validErrors = validator.creditValidation(credit);
-        if (validErrors != null) {
-            throw new ValidationException(validErrors);
-        }
+        validator.creditValidation(credit);
 
         if(credit.getId() == null) {
             creditServiceImpl.save(credit);
