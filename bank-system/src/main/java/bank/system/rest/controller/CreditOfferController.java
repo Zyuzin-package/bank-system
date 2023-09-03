@@ -54,7 +54,6 @@ public class CreditOfferController {
     public String remove(@PathVariable String id) {
         validator.uuidValidator(id);
 
-
         creditOfferServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/creditsOffers";
     }
@@ -64,14 +63,14 @@ public class CreditOfferController {
             @RequestParam(name = "creditId") String creditId,
             @RequestParam(name = "clientId") String clientId,
             @RequestParam(name = "duration") Integer duration,
-            @RequestParam(name = "fullsum") String fullsum,
-            Model model
+            @RequestParam(name = "fullsum") String fullsum
     ){
         validator.uuidValidator(creditId);
+
         validator.uuidValidator(clientId);
 
-        Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
+        Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
         CreditOffer creditOffer = CreditOffer.builder()
                 .credit(credit)
@@ -81,7 +80,6 @@ public class CreditOfferController {
                 .build();
 
         validator.creditOfferValidation(creditOffer);
-
         creditOfferServiceImpl.save(creditOffer);
 
 

@@ -59,7 +59,6 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         List<PaymentEvent> savedGraph = paymentEventService.bulkSave(paymentGraph);
         creditOffer.setPaymentEventList(savedGraph);
 
-
         return creditOfferRepository.save(creditOffer);
     }
 
@@ -121,20 +120,27 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     }
 
     /**
+     * Method for calculating the total amount of a loan
+     * @param creditOffer - Credit offer which will be used to calculate
+     * @return - total amount of a loan
+     */
+    public double finalSumByCredit(CreditOffer creditOffer) {
+        return rounding(calculatePaymentPerMount(creditOffer) * creditOffer.getDuration());
+    }
+
+    /**
      * Method that calculates the payment schedule for an annuity payment
      * @param creditOffer - the entity on the basis of which you need to build a payment schedule
      * @return list for further save
      */
     private List<PaymentEvent> buildPaymentGraph(CreditOffer creditOffer) {
         List<PaymentEvent> paymentEvents = new ArrayList<>();
-        int duration = creditOffer.getDuration();
-        double sum = creditOffer.getPaymentSum();
-        double percent = creditOffer.getCredit().getInterestRate();
         LocalDate localDate = LocalDate.now();
 
-        double temp = percent / (100 * 12);
+        int duration = creditOffer.getDuration();
+        double percent = creditOffer.getCredit().getInterestRate();
 
-        double PaymentPerMount = sum * (temp / (1 - Math.pow(1 + temp, -duration)));
+        double PaymentPerMount = calculatePaymentPerMount(creditOffer);
         double t = PaymentPerMount * duration;
         for (int i = 1; i <= duration; i++) {
             double creditSum = (t * (percent / 100) * 30) / 365;
@@ -148,8 +154,22 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
                     .localDate(localDate.plusMonths(i))
                     .build());
         }
-
         return paymentEvents;
+    }
+
+    /**
+     * Method that calculate the amount to be paid by the client each month
+     * @param creditOffer - Credit offer which will be used to calculate
+     * @return - The amount that the client will pay on the loan each month
+     */
+    private double calculatePaymentPerMount(CreditOffer creditOffer) {
+        int duration = creditOffer.getDuration();
+        double sum = creditOffer.getPaymentSum();
+        double percent = creditOffer.getCredit().getInterestRate();
+
+        double temp = percent / (100 * 12);
+
+        return sum * (temp / (1 - Math.pow(1 + temp, -duration)));
     }
 
     /**

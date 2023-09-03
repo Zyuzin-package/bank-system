@@ -148,10 +148,6 @@ public class Validator {
         if (creditOffer.getCredit() == null) {
             errorMessage.append("credit offer must have credit|");
             noError = false;
-        } else {
-            if (!creditValidation(creditOffer.getCredit())) {
-                noError = false;
-            }
         }
 
         if (creditOffer.getDuration() <= 0) {
@@ -170,10 +166,6 @@ public class Validator {
         if (creditOffer.getClient() == null) {
             errorMessage.append("credit offer must have client|");
             noError = false;
-        } else {
-            if (!clientValidation(creditOffer.getClient())) {
-                noError = false;
-            }
         }
 
         if (!noError) {
