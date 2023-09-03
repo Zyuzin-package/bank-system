@@ -4,7 +4,7 @@ spring:
     suffix: .html
   datasource:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
-    url: jdbc:hsqldb:file:./bank-system/db/testdb
+    url: jdbc:hsqldb:file:./db/testDB
     username: sa
     password:
   jpa:
