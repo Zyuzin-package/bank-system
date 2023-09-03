@@ -22,7 +22,10 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
     @Lazy
     private final CreditOfferServiceImpl creditOfferService;
 
-    public ClientServiceImpl(ClientRepository clientRepository, @Lazy CreditOfferServiceImpl creditOfferService) {
+    public ClientServiceImpl(
+            ClientRepository clientRepository,
+            @Lazy CreditOfferServiceImpl creditOfferService
+    ) {
         this.clientRepository = clientRepository;
         this.creditOfferService = creditOfferService;
     }

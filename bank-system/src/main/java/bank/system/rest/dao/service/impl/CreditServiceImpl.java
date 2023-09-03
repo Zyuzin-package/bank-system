@@ -39,7 +39,7 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
 
     @Override
     public Credit findById(UUID uuid) {
-        return creditRepository.findById(uuid).orElse(null);
+        return creditRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Client with id: " + uuid + " not found"));
     }
 
     @Override

@@ -31,10 +31,12 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     @Value("${bank.credit-offer.scale}")
     private double scale;
 
-    public CreditOfferServiceImpl(CreditOfferRepository creditOfferRepository,
-                                  PaymentEventServiceImpl paymentEventService,
-                                  @Lazy CreditServiceImpl creditService,
-                                  @Lazy ClientServiceImpl clientService) {
+    public CreditOfferServiceImpl(
+            CreditOfferRepository creditOfferRepository,
+            PaymentEventServiceImpl paymentEventService,
+            @Lazy CreditServiceImpl creditService,
+            @Lazy ClientServiceImpl clientService
+    ) {
         this.creditOfferRepository = creditOfferRepository;
         this.paymentEventService = paymentEventService;
         this.creditService = creditService;
