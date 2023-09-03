@@ -28,6 +28,11 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     private final CreditServiceImpl creditService;
     private final ClientServiceImpl clientService;
+
+    /**
+     * variable responsible for rounding in the method rounding(double d)
+     * which is used in the method {@link #buildPaymentGraph(CreditOffer creditOffer)}
+     */
     @Value("${bank.credit-offer.scale}")
     private double scale;
 
@@ -115,6 +120,11 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         creditOfferRepository.deleteById(uuid);
     }
 
+    /**
+     * Method that calculates the payment schedule for an annuity payment
+     * @param creditOffer - the entity on the basis of which you need to build a payment schedule
+     * @return list for further save
+     */
     private List<PaymentEvent> buildPaymentGraph(CreditOffer creditOffer) {
         List<PaymentEvent> paymentEvents = new ArrayList<>();
         int duration = creditOffer.getDuration();
@@ -142,6 +152,11 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         return paymentEvents;
     }
 
+    /**
+     * Rounding method, based on value {@link #scale}
+     * @param d - number to be rounded
+     * @return - rounded number
+     */
     private double rounding(double d) {
         return Math.round(d * scale) / scale;
     }

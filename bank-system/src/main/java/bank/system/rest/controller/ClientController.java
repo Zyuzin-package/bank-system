@@ -34,7 +34,6 @@ public class ClientController {
         model.addAttribute("clients", clientList);
         return "clients";
     }
-
     @GetMapping("/clients/new")
     public String getCreatePage(Model model) {
         model.addAttribute("client", new Client());

@@ -7,18 +7,38 @@ import bank.system.rest.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Entity validator class. If the field fails validation, adds an error notice to the string.
+ * After checking all fields, if there is a validation error, it throws {@link ValidationException}
+ * Which is caught by the {@link bank.system.rest.controller.GlobalExceptionHandler} and displays an error page passing a error message to it
+ */
 @Component
 public class Validator {
-
+    /**
+     * The maximum allowable amount that the bank can issue to the client
+     */
     @Value("${bank.credit.max-limit}")
     double maxCreditLimit;
-
+    /**
+     * The minimum percentage at which a bank can issue a loan
+     */
     @Value("${bank.credit.min-interest-rate}")
     double minInterestRate;
 
+    /**
+     * The method that processes {@link Client}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     * @param client - Entity to check
+     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     */
     public boolean clientValidation(Client client) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
+
+        if(client.getId()!=null){
+            if(uuidValidator(client.getId().toString())){
+                noError = false;
+            }
+        }
 
         String email = client.getEmail();
         if (email == null) {
@@ -64,15 +84,26 @@ public class Validator {
             errorMessage.append("passport id must match the pattern: **-**-******|");
             noError = false;
         }
-        if(noError == false){
+        if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
         return true;
     }
 
+    /**
+     * The method that processes {@link Credit}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     * @param credit - Entity to check
+     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     */
     public boolean creditValidation(Credit credit) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
+
+        if(credit.getId()!=null){
+            if(uuidValidator(credit.getId().toString())){
+                noError = false;
+            }
+        }
 
         if (credit.getLimit() <= 0) {
             errorMessage.append("credit limit must be positive|");
@@ -93,15 +124,26 @@ public class Validator {
                 noError = false;
             }
         }
-        if(noError == false){
+        if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
         return true;
     }
 
+    /**
+     * The method that processes {@link CreditOffer}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     * @param creditOffer - Entity to check
+     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     */
     public boolean creditOfferValidation(CreditOffer creditOffer) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
+
+        if(creditOffer.getId()!=null){
+            if(uuidValidator(creditOffer.getId().toString())){
+                noError = false;
+            }
+        }
 
         if (creditOffer.getCredit() == null) {
             errorMessage.append("credit offer must have credit|");
@@ -134,12 +176,16 @@ public class Validator {
             }
         }
 
-        if(noError == false){
+        if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
         return true;
     }
-
+    /**
+     * The method that processes {@link java.util.UUID}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     * @param uuid - Entity to check
+     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     */
     public boolean uuidValidator(String uuid) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
@@ -152,7 +198,7 @@ public class Validator {
             errorMessage.append("Incorrect id|");
             noError = false;
         }
-        if(noError == false){
+        if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
         return true;
