@@ -13,19 +13,21 @@
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <div>
-    <table align="center" border="1">
+    <div class="container">
+        <div class="col-12   mx-auto">
+    <table class="table table-bordered">
         <tr>
             <td>
-                Payment date
+                <h5>Payment date</h5>
             </td>
             <td>
-                Payment sum
+                <h5>Payment sum</h5>
             </td>
             <td>
-                Credit sum
+                <h5>Credit sum</h5>
             </td>
             <td>
-                Interest sum
+                <h5>Interest sum</h5>
             </td>
         </tr>
         <tr th:unless="${#lists.isEmpty(paymentEvents)}" th:each="paymentEvent : ${paymentEvents}">
@@ -34,14 +36,9 @@
             <td th:text="${paymentEvent.creditSum}"></td>
             <td th:text="${paymentEvent.interestSum}"></td>
         </tr>
-        <tr>
-            <td colspan="6" align="center">
-                <a th:href="@{/paymentEvents/new}">
-                    <button>Add</button>
-                </a>
-            </td>
-        </tr>
     </table>
+</div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
