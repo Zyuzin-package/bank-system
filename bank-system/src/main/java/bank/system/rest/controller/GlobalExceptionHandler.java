@@ -9,7 +9,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.List;
 
-
+/**
+ * Класс, который отвечает за отлов ошибок: кастомных и остальных, и редиректит на странцу с ошибкой передавая информацию об ошибке
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     

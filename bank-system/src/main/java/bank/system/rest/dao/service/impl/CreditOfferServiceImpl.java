@@ -46,7 +46,6 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public CreditOffer save(CreditOffer creditOffer) {
-
         creditService.save(creditOffer.getCredit());
         clientService.save(creditOffer.getClient());
 

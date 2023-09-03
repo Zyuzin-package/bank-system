@@ -17,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-public class Client {
+public class  Client {
     @Id
     @GeneratedValue
     @UuidGenerator

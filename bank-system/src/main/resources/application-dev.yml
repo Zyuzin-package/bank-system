@@ -11,7 +11,7 @@ spring:
     database-platform: org.hibernate.dialect.HSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     properties:
       hibernate:
         hbm2ddl:
