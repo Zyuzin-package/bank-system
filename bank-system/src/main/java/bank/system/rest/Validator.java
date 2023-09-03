@@ -23,27 +23,34 @@ public class Validator {
         String email = client.getEmail();
         if (email == null) {
             errorMessage.append("email must be not be empty|");
+            noError = false;
         } else if (!email.matches("^[A-Za-z0-9_.-]+@[a-z0-9-]+(\\.[a-z]{2,6})$")) {
             errorMessage.append("email should be correct value|");
+            noError = false;
         }
 
         String fName = client.getFirstName();
         if (fName == null) {
             errorMessage.append("first name must be not be empty|");
+            noError = false;
         } else if (!fName.matches("[a-zA-Z\\s]+")) {
             errorMessage.append("first name cannot contain numbers|");
+            noError = false;
         }
 
         String phoneNum = client.getPhoneNumber();
         if (phoneNum == null) {
             errorMessage.append("phone number filed must be not be empty|");
+            noError = false;
         } else if (!phoneNum.matches("8-9\\d{2}-\\d{3}-\\d{2}-\\d{2}")) {
             errorMessage.append("phone number must match the pattern: 8-9**-***-**-**|");
+            noError = false;
         }
 
         String sName = client.getSecondName();
         if (sName == null) {
             errorMessage.append("second name must be not be empty|");
+            noError = false;
         } else if (!sName.matches("[a-zA-Z\\s]+")) {
             errorMessage.append("second name cannot contain numbers|");
             noError = false;
