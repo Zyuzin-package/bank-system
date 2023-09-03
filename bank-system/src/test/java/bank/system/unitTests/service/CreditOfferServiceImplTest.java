@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -26,6 +27,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertThrows;
 
 @SpringBootTest
+@ActiveProfiles(value = "test")
 public class CreditOfferServiceImplTest {
     @InjectMocks
     private CreditOfferServiceImpl creditOfferService;
