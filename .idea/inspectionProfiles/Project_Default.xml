@@ -1,14 +1,18 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,org.mockito.MockitoAnnotations,openMocks" />
+    </inspection_tool>
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="4">
+          <list size="5">
             <item index="0" class="java.lang.String" itemvalue="th:text" />
             <item index="1" class="java.lang.String" itemvalue="th:unless" />
             <item index="2" class="java.lang.String" itemvalue="th:each" />
             <item index="3" class="java.lang.String" itemvalue="th:action" />
+            <item index="4" class="java.lang.String" itemvalue="th:insert" />
           </list>
         </value>
       </option>
