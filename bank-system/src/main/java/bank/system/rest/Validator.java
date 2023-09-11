@@ -3,7 +3,9 @@ package bank.system.rest;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.rest.exception.ServerException;
 import bank.system.rest.exception.ValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +22,32 @@ public class Validator {
     @Value("${bank.credit.max-limit}")
     double maxCreditLimit;
     /**
+     * The maximum duration for credit offer
+     */
+    @Value("${bank.credit-offer.duration.max}")
+    double maxCreditOfferDuration;
+    /**
+     * The minimum duration for credit offer
+     */
+    @Value("${bank.credit-offer.duration.min}")
+    double minCreditOfferDuration;
+    /**
      * The minimum percentage at which a bank can issue a loan
      */
     @Value("${bank.credit.min-interest-rate}")
     double minInterestRate;
 
+    public double getMaxCreditOfferDuration() {
+        return maxCreditOfferDuration;
+    }
+
+    public double getMinCreditOfferDuration() {
+        return minCreditOfferDuration;
+    }
+
     /**
      * The method that processes {@link Client}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     *
      * @param client - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
@@ -34,8 +55,8 @@ public class Validator {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
-        if(client.getId()!=null){
-            if(!uuidValidator(client.getId().toString())){
+        if (client.getId() != null) {
+            if (!uuidValidator(client.getId().toString())) {
                 noError = false;
             }
         }
@@ -62,7 +83,7 @@ public class Validator {
         if (phoneNum == null) {
             errorMessage.append("phone number filed must be not be empty|");
             noError = false;
-        } else if (!phoneNum.matches("8-9\\d{2}-\\d{3}-\\d{2}-\\d{2}")) {
+        } else if (!phoneNum.matches("\\d{1}-\\d{3}-\\d{3}-\\d{2}-\\d{2}")) {
             errorMessage.append("phone number must match the pattern: 8-9**-***-**-**|");
             noError = false;
         }
@@ -92,6 +113,7 @@ public class Validator {
 
     /**
      * The method that processes {@link Credit}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     *
      * @param credit - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
@@ -99,8 +121,8 @@ public class Validator {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
-        if(credit.getId()!=null){
-            if(!uuidValidator(credit.getId().toString())){
+        if (credit.getId() != null) {
+            if (!uuidValidator(credit.getId().toString())) {
                 noError = false;
             }
         }
@@ -132,6 +154,7 @@ public class Validator {
 
     /**
      * The method that processes {@link CreditOffer}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     *
      * @param creditOffer - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
@@ -139,8 +162,8 @@ public class Validator {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
-        if(creditOffer.getId()!=null){
-            if(!uuidValidator(creditOffer.getId().toString())){
+        if (creditOffer.getId() != null) {
+            if (!uuidValidator(creditOffer.getId().toString())) {
                 noError = false;
             }
         }
@@ -149,11 +172,24 @@ public class Validator {
             errorMessage.append("credit offer must have credit|");
             noError = false;
         }
-
         if (creditOffer.getDuration() <= 0) {
             errorMessage.append("credit offer duration must be positive|");
             noError = false;
         }
+
+        if (creditOffer.getDuration()<minCreditOfferDuration){
+            errorMessage.append("credit offer duration must be longer than ")
+                    .append(minCreditOfferDuration)
+                    .append("|");
+            noError = false;
+        }
+        if (creditOffer.getDuration()>maxCreditOfferDuration){
+            errorMessage.append("credit offer duration must be less than ")
+                    .append(maxCreditOfferDuration)
+                    .append("|");
+            noError = false;
+        }
+
         if (creditOffer.getPaymentSum() <= 0) {
             errorMessage.append("payment sum must be not be positive|");
             noError = false;
@@ -173,8 +209,10 @@ public class Validator {
         }
         return true;
     }
+
     /**
      * The method that processes {@link java.util.UUID}. In case of an error in one or more fields - throws an error {@link ValidationException}.
+     *
      * @param uuid - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */

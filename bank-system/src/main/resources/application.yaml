@@ -7,3 +7,6 @@ bank:
     min-interest-rate: 5
   credit-offer:
     scale: 100.0
+    duration:
+      min: 1.0
+      max: 25.0
