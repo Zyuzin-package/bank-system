@@ -35,7 +35,7 @@ public class Validator {
         boolean noError = true;
 
         if(client.getId()!=null){
-            if(uuidValidator(client.getId().toString())){
+            if(!uuidValidator(client.getId().toString())){
                 noError = false;
             }
         }
@@ -100,7 +100,7 @@ public class Validator {
         boolean noError = true;
 
         if(credit.getId()!=null){
-            if(uuidValidator(credit.getId().toString())){
+            if(!uuidValidator(credit.getId().toString())){
                 noError = false;
             }
         }
@@ -140,7 +140,7 @@ public class Validator {
         boolean noError = true;
 
         if(creditOffer.getId()!=null){
-            if(uuidValidator(creditOffer.getId().toString())){
+            if(!uuidValidator(creditOffer.getId().toString())){
                 noError = false;
             }
         }

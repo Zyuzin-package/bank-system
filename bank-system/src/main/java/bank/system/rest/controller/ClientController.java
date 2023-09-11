@@ -59,7 +59,7 @@ public class ClientController {
     }
 
     @PostMapping("/clients/new")
-    public String merge(Client client, Model model) {
+    public String merge(Client client) {
         validator.clientValidation(client);
 
         if (client.getId() == null) {
@@ -67,6 +67,7 @@ public class ClientController {
         } else {
             clientServiceImpl.update(client);
         }
+
         return "redirect:/clients";
     }
 }
