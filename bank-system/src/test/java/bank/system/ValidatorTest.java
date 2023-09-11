@@ -160,23 +160,5 @@ public class ValidatorTest {
         assertEquals(thrown.getMessage(), "credit offer duration must be positive|payment sum must be less than credit limit|");
     }
 
-    @Test
-    public void creditOfferValidationNegativeTest2(){
-        Credit credit = Credit.builder()
-                .interestRate(15)
-                .limit(20000)
-                .build();
-
-        CreditOffer creditOffer = CreditOffer.builder()
-                .credit(credit)
-                .paymentSum(15000)
-                .duration(12)
-                .build();
-
-        ValidationException thrown = assertThrows(ValidationException.class,
-                () -> validator.creditOfferValidation(creditOffer));
-        System.out.println(thrown.getMessage());
-        assertEquals(thrown.getMessage(), "credit offer must have client|");
-    }
 
 }

@@ -89,23 +89,4 @@ public class CreditOfferRepositoryTest {
         assertEquals(newOffer, savedOffer);
     }
 
-//    @Test
-//    @Transactional(isolation = Isolation.SERIALIZABLE)
-//    public void findCreditOfferByClientIdTestPositive() {
-//        CreditOffer savedOffer = creditOfferRepository.save(creditOffer);
-//
-//        CreditOffer foundOffer = creditOfferRepository.findCreditOfferByClientId(savedOffer.getClient().getId());
-//        assertEquals(savedOffer.getId(),foundOffer.getId());
-//        creditOfferRepository.delete(creditOffer);
-//    }
-//
-//    @Test
-//    @Transactional(isolation = Isolation.SERIALIZABLE)
-//    public void findCreditOfferByCreditIdTestPositive() {
-//        CreditOffer savedOffer = creditOfferRepository.save(creditOffer);
-//
-//        CreditOffer foundOffer = creditOfferRepository.findCreditOfferByCreditId(savedOffer.getCredit().getId());
-//
-//        assertEquals(savedOffer.getId(),foundOffer.getId());
-//    }
 }
