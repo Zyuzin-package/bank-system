@@ -1,5 +1,7 @@
 package bank.system.rest.dao.service.api;
 
+import bank.system.rest.exception.ServerException;
+
 import java.util.List;
 
 public interface StorageDAO<T,I> {
@@ -8,5 +10,5 @@ public interface StorageDAO<T,I> {
     T findById(I id);
     T update(T t);
     void remove(T t);
-    void removeById(I id);
+    void removeById(I id) throws ServerException;
 }

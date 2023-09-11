@@ -5,6 +5,7 @@ import bank.system.model.domain.CreditOffer;
 import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
+import bank.system.rest.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -60,11 +61,15 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
-    public void removeById(UUID uuid) {
+    public void removeById(UUID uuid) throws ServerException {
+        creditRepository.findById(uuid).orElseThrow(
+                () -> new EntityNotFoundException("Credit with id: " + uuid + " not found")
+        );
+
         CreditOffer creditOffer = creditOfferService.findByCredit(uuid);
 
         if (creditOffer != null) {
-            creditOfferService.removeById(creditOffer.getId());
+            throw new ServerException("There is a credit offer for this credit");
         }
 
         creditRepository.deleteById(uuid);

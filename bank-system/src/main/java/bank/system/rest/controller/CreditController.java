@@ -1,6 +1,7 @@
 package bank.system.rest.controller;
 
 import bank.system.model.domain.Credit;
+import bank.system.rest.exception.ServerException;
 import bank.system.rest.exception.ValidationException;
 import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
@@ -50,7 +51,7 @@ public class CreditController {
     }
 
     @GetMapping("/credits/remove/{id}")
-    public String remove(@PathVariable String id) {
+    public String remove(@PathVariable String id) throws ServerException {
         validator.uuidValidator(id);
 
         creditServiceImpl.removeById(UUID.fromString(id));

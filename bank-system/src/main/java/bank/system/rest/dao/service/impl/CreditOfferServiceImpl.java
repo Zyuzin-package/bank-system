@@ -73,19 +73,12 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     }
 
     public CreditOffer findByClient(UUID uuid) {
-        CreditOffer offer = creditOfferRepository.findCreditOfferByClientId(uuid);
-        if (offer == null) {
-            throw new EntityNotFoundException("CreditOffer with client id: " + uuid + " not found");
-        }
-        return offer;
+       return creditOfferRepository.findCreditOfferByClientId(uuid);
     }
 
     public CreditOffer findByCredit(UUID uuid) {
-        CreditOffer offer = creditOfferRepository.findCreditOfferByCreditId(uuid);
-        if (offer == null) {
-            throw new EntityNotFoundException("CreditOffer by with credit id: " + uuid + " not found");
-        }
-        return offer;
+       return creditOfferRepository.findCreditOfferByCreditId(uuid);
+
     }
 
     @Override
