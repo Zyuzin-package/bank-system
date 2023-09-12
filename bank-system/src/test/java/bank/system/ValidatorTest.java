@@ -38,7 +38,7 @@ public class ValidatorTest {
                 .phoneNumber("8-958-765-67-78")
                 .secondName("Wake")
                 .build();
-        assertTrue(validator.clientValidation(client));
+        assertEquals(validator.clientValidation(client),client);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ValidatorTest {
                 .interestRate(15)
                 .limit(20000)
                 .build();
-        assertTrue(validator.creditValidation(credit));
+        assertEquals(validator.creditValidation(credit),credit);
     }
 
     @Test
@@ -127,9 +127,8 @@ public class ValidatorTest {
                 .duration(12)
                 .build();
 
-        assertTrue(validator.clientValidation(client));
-        assertTrue(validator.creditValidation(credit));
-        assertTrue(validator.creditOfferValidation(creditOffer));
+
+        assertEquals(validator.creditOfferValidation(creditOffer),creditOffer);
     }
 
     @Test

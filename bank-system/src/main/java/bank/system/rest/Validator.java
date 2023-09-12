@@ -5,9 +5,12 @@ import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
 import bank.system.rest.exception.ServerException;
 import bank.system.rest.exception.ValidationException;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 /**
  * Entity validator class. If the field fails validation, adds an error notice to the string.
@@ -37,6 +40,12 @@ public class Validator {
     @Value("${bank.credit.min-interest-rate}")
     double minInterestRate;
 
+    //    @PostConstruct
+//    public void test(){
+//
+//    }
+    private static final String nameRegex = "[a-zA-Z\\s]+";
+
     public double getMaxCreditOfferDuration() {
         return maxCreditOfferDuration;
     }
@@ -51,7 +60,7 @@ public class Validator {
      * @param client - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
-    public boolean clientValidation(Client client) {
+    public Client clientValidation(Client client) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
@@ -74,7 +83,7 @@ public class Validator {
         if (fName == null) {
             errorMessage.append("first name must be not be empty|");
             noError = false;
-        } else if (!fName.matches("[a-zA-Z\\s]+")) {
+        } else if (!fName.matches(nameRegex)) {
             errorMessage.append("first name cannot contain numbers|");
             noError = false;
         }
@@ -83,8 +92,8 @@ public class Validator {
         if (phoneNum == null) {
             errorMessage.append("phone number filed must be not be empty|");
             noError = false;
-        } else if (!phoneNum.matches("\\d{1}-\\d{3}-\\d{3}-\\d{2}-\\d{2}")) {
-            errorMessage.append("phone number must match the pattern: 8-9**-***-**-**|");
+        } else if (!phoneNum.matches("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")) {
+            errorMessage.append("phone number must be valid|");
             noError = false;
         }
 
@@ -92,7 +101,7 @@ public class Validator {
         if (sName == null) {
             errorMessage.append("second name must be not be empty|");
             noError = false;
-        } else if (!sName.matches("[a-zA-Z\\s]+")) {
+        } else if (!sName.matches(nameRegex)) {
             errorMessage.append("second name cannot contain numbers|");
             noError = false;
         }
@@ -101,14 +110,32 @@ public class Validator {
         if (passportId == null) {
             errorMessage.append("passport id must be not be empty|");
             noError = false;
-        } else if (!passportId.matches("\\d{2}-\\d{2}-\\d{6}")) {
-            errorMessage.append("passport id must match the pattern: **-**-******|");
+        } else if (!passportId.matches("\\d{2}[\\- ]?\\d{2}[\\- ]?\\d{6}")) {
+            errorMessage.append("passport id must be valid|");
             noError = false;
         }
         if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
-        return true;
+
+        client.setPhoneNumber(formatPhoneNumber(client.getPhoneNumber()));
+        client.setPassportID(formatPassportId(client.getPassportID()));
+
+        return client;
+    }
+
+    private String formatPhoneNumber(String phoneNum) {
+        return phoneNum.chars()
+                .filter(Character::isLetterOrDigit)
+                .mapToObj(i -> String.valueOf((char) i))
+                .collect(Collectors.joining());
+    }
+
+    private String formatPassportId(String passId) {
+        return passId.chars()
+                .filter(Character::isLetterOrDigit)
+                .mapToObj(i -> String.valueOf((char) i))
+                .collect(Collectors.joining());
     }
 
     /**
@@ -117,7 +144,7 @@ public class Validator {
      * @param credit - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
-    public boolean creditValidation(Credit credit) {
+    public Credit creditValidation(Credit credit) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
@@ -149,7 +176,7 @@ public class Validator {
         if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
-        return true;
+        return credit;
     }
 
     /**
@@ -158,7 +185,7 @@ public class Validator {
      * @param creditOffer - Entity to check
      * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
-    public boolean creditOfferValidation(CreditOffer creditOffer) {
+    public CreditOffer creditOfferValidation(CreditOffer creditOffer) {
         StringBuilder errorMessage = new StringBuilder();
         boolean noError = true;
 
@@ -177,13 +204,13 @@ public class Validator {
             noError = false;
         }
 
-        if (creditOffer.getDuration()<minCreditOfferDuration){
+        if (creditOffer.getDuration() < minCreditOfferDuration) {
             errorMessage.append("credit offer duration must be longer than ")
                     .append(minCreditOfferDuration)
                     .append("|");
             noError = false;
         }
-        if (creditOffer.getDuration()>maxCreditOfferDuration){
+        if (creditOffer.getDuration() > maxCreditOfferDuration) {
             errorMessage.append("credit offer duration must be less than ")
                     .append(maxCreditOfferDuration)
                     .append("|");
@@ -207,7 +234,7 @@ public class Validator {
         if (!noError) {
             throw new ValidationException(errorMessage.toString());
         }
-        return true;
+        return creditOffer;
     }
 
     /**
