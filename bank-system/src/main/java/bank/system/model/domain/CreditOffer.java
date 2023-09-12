@@ -30,11 +30,14 @@ public class CreditOffer {
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Client client;
+
     private double paymentSum;
     @OneToOne(fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Credit credit;
+
     private int duration;
+
     @OneToMany
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private List<PaymentEvent> paymentEventList;

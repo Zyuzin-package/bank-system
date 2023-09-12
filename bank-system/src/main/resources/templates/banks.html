@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Clients</title>
+    <title>Banks</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link th:href="@{../assets/css/style.css}" rel="stylesheet">
@@ -11,40 +11,23 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
 <div>
     <div class="container">
-        <div class="col-10 mx-auto">
+        <div class="col-6 mx-auto">
             <table class="table table-bordered">
                 <tr>
                     <td>
-                        <h5>First name</h5>
+                        <h5>Title</h5>
                     </td>
-                    <td>
-                        <h5>Second name</h5>
-                    </td>
-                    <td>
-                        <h5>Phone number</h5>
-                    </td>
-                    <td>
-                        <h5>Email</h5>
-                    </td>
-                    <td>
-                        <h5>Passport ID</h5>
-                    </td>
-
-                    <td>
-                    </td>
-                    <td>
-                    </td>
+                    <td></td>
+                    <td></td>
                 </tr>
-                <tr th:unless="${#lists.isEmpty(clients)}" th:each="client : ${clients}">
-                    <td th:text="${client.firstName}"></td>
-                    <td th:text="${client.secondName}"></td>
-                    <td th:text="${client.phoneNumber}"></td>
-                    <td th:text="${client.email}"></td>
-                    <td th:text="${client.passportID}"></td>
-                    <td><a th:href="@{/clients/edit/{id}(id=${client.id})}">
+                <tr th:unless="${#lists.isEmpty(banks)}" th:each="bank : ${banks}">
+                    <td th:text="${bank.title}"></td>
+                    <td><a th:href="@{/banks/edit/{id}(id=${bank.id})}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -52,7 +35,7 @@
                                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                         </svg>
                     </a></td>
-                    <td><a th:href="@{/clients/remove/{id}(id=${client.id})}">
+                    <td><a th:href="@{/banks/remove/{id}(id=${bank.id})}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-x-lg"
                              viewBox="0 0 16 16">
@@ -65,7 +48,7 @@
                 </tr>
                 <tr>
                     <td colspan="5" align="center">
-                        <a th:href="@{/clients/new}">
+                        <a th:href="@{/banks/new}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-journal-plus" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Create client</title>
+    <title>Update bank</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link th:href="@{../assets/css/style.css}" rel="stylesheet">
@@ -13,62 +13,17 @@
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 <div>
-    <form th:action="@{/clients/new}" th:object="${client}" method="post">
+    <form th:action="@{/banks/new}" th:object="${bank}" method="post">
         <div class="container">
             <div class="col-8 mx-auto">
                 <table class="table table-bordered">
                     <tr>
                         <td>
-                            <h5>First name</h5>
+                            <h5>Title</h5>
                         </td>
                         <td>
-                            <input type="text" class="form-control" th:field="*{firstName}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Second name</h5>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" th:field="*{secondName}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Phone number</h5>
-                        </td>
-                        <td>
-                            <input type="tel" class="form-control" th:field="*{phoneNumber}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Email</h5>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" th:field="*{email}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Passport ID</h5>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" th:field="*{passportID}"/>
-                            <input type="hidden" th:field="*{id}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5>Bank</h5>
-                        </td>
-                        <td>
-                            <select th:name="bank" id="bank" name="bank">
-                                <option th:each="bank : ${banks}"
-                                        th:text="${bank.title}"
-                                        th:value="${bank.id}">
-                                </option>
-                            </select>
+                            <input type="text" class="form-control" th:field="*{title}"/>
+                            <input type="hidden" class="form-control" th:field="*{id}"/>
                         </td>
                     </tr>
                     <tr>

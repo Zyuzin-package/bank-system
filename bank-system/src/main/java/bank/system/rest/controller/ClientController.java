@@ -2,6 +2,7 @@ package bank.system.rest.controller;
 
 
 import bank.system.model.domain.Client;
+import bank.system.rest.dao.service.impl.BankServiceImpl;
 import bank.system.rest.exception.ValidationException;
 import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,11 +21,13 @@ import java.util.UUID;
 public class ClientController {
 
     private final ClientServiceImpl clientServiceImpl;
+    private final BankServiceImpl bankServiceImpl;
 
     private final Validator validator;
 
-    public ClientController(ClientServiceImpl clientServiceImpl, Validator validator) {
+    public ClientController(ClientServiceImpl clientServiceImpl, BankServiceImpl bankServiceImpl, Validator validator) {
         this.clientServiceImpl = clientServiceImpl;
+        this.bankServiceImpl = bankServiceImpl;
         this.validator = validator;
     }
 
@@ -37,6 +41,7 @@ public class ClientController {
     @GetMapping("/clients/new")
     public String getCreatePage(Model model) {
         model.addAttribute("client", new Client());
+        model.addAttribute("banks",bankServiceImpl.getAll());
 
         return "updateClient";
     }
@@ -47,6 +52,7 @@ public class ClientController {
 
         Client client = clientServiceImpl.findById(UUID.fromString(id));
         model.addAttribute("client", Objects.requireNonNullElseGet(client, Client::new));
+        model.addAttribute("banks",bankServiceImpl.getAll());
         return "updateClient";
     }
 
@@ -59,7 +65,7 @@ public class ClientController {
     }
 
     @PostMapping("/clients/new")
-    public String merge(Client client) {
+    public String merge(Client client,@RequestParam(name = "bank") String bank) {
         validator.clientValidation(client);
 
         if (client.getId() == null) {
