@@ -39,6 +39,18 @@ public class BankController {
         return "updateBank";
     }
 
+    @GetMapping("/banks/{id}")
+    public String getBankDetails(@PathVariable String id,Model model) {
+
+        Bank bank = bankServiceImpl.findById(UUID.fromString(id));
+
+        model.addAttribute("bank",bank);
+        model.addAttribute("credits",bank.getCreditList());
+        model.addAttribute("clients",bank.getClientList());
+
+        return "bankDetails";
+    }
+
     @GetMapping("/banks/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
         validator.uuidValidator(id);

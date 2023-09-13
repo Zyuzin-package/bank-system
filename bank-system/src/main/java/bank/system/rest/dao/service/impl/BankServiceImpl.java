@@ -1,6 +1,8 @@
 package bank.system.rest.dao.service.impl;
 
 import bank.system.model.domain.Bank;
+import bank.system.model.domain.Client;
+import bank.system.model.domain.Credit;
 import bank.system.rest.dao.repository.BankRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
 import bank.system.rest.exception.EntityNotFoundException;
@@ -33,6 +35,14 @@ public class BankServiceImpl implements StorageDAO<Bank, UUID> {
         return bankRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bank with id: " + id + " not found"));
     }
 
+    public Bank findByClient(Client client) {
+        return bankRepository.findBankByClientListContains(client);
+    }
+
+    public Bank findByCredit(Credit credit) {
+        return bankRepository.findBankByCreditListContains(credit);
+    }
+
     @Override
     public Bank update(Bank bank) {
         Bank savedBank = bankRepository.findById(bank.getId()).orElseThrow(() -> new EntityNotFoundException("Bank with id: " + bank.getId() + " not found"));
@@ -43,13 +53,26 @@ public class BankServiceImpl implements StorageDAO<Bank, UUID> {
     }
 
     @Override
-    public void remove(Bank bank) {
+    public void remove(Bank bank) throws ServerException {
+        Bank oldBank = findById(bank.getId());
+        if (!oldBank.getClientList().isEmpty()) {
+            throw new ServerException("Bank has clients");
+        } else if (!oldBank.getCreditList().isEmpty()) {
+            throw new ServerException("Bank has credits");
+        }
+
         bankRepository.delete(bank);
     }
 
     @Override
     public void removeById(UUID id) throws ServerException {
-        bankRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bank with id: " + id + " not found"));
+        Bank oldBank = bankRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bank with id: " + id + " not found"));
+
+        if (!oldBank.getClientList().isEmpty()){
+            throw new ServerException("Bank has clients");
+        } else if (!oldBank.getCreditList().isEmpty()){
+            throw new ServerException("Bank has credits");
+        }
 
         bankRepository.deleteById(id);
     }

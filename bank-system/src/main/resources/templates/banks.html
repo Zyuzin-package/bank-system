@@ -24,6 +24,7 @@
                     </td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
                 <tr th:unless="${#lists.isEmpty(banks)}" th:each="bank : ${banks}">
                     <td th:text="${bank.title}"></td>
@@ -45,6 +46,9 @@
                                   d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
                         </svg>
                     </a></td>
+                    <td>
+                        <a th:href="@{/banks/{id}(id=${bank.id})}">Details</a>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="5" align="center">

@@ -3,7 +3,9 @@ package bank.system.model.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.UuidGenerator;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -28,11 +30,11 @@ public class Bank {
     private String title;
 
     @OneToMany
-    @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
+    @Cascade(value ={CascadeType.REMOVE})
     private List<Credit> creditList;
 
     @OneToMany
-    @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
+    @Cascade(value ={CascadeType.REMOVE})
     private List<Client> clientList;
 
 }

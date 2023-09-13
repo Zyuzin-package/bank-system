@@ -1,12 +1,10 @@
 package bank.system.rest.dao.service.impl;
 
-import bank.system.model.domain.Client;
-import bank.system.model.domain.Credit;
-import bank.system.model.domain.CreditOffer;
-import bank.system.model.domain.PaymentEvent;
+import bank.system.model.domain.*;
 import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditOfferRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
+import bank.system.rest.exception.ServerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     private final CreditOfferRepository creditOfferRepository;
     private final PaymentEventServiceImpl paymentEventService;
-
+    private final BankServiceImpl bankService;
     private final CreditServiceImpl creditService;
     private final ClientServiceImpl clientService;
 
@@ -40,17 +38,26 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
             CreditOfferRepository creditOfferRepository,
             PaymentEventServiceImpl paymentEventService,
             @Lazy CreditServiceImpl creditService,
-            @Lazy ClientServiceImpl clientService
+            @Lazy ClientServiceImpl clientService,
+            BankServiceImpl bankService
     ) {
         this.creditOfferRepository = creditOfferRepository;
         this.paymentEventService = paymentEventService;
         this.creditService = creditService;
         this.clientService = clientService;
+        this.bankService = bankService;
     }
 
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public CreditOffer save(CreditOffer creditOffer) {
+    public CreditOffer save(CreditOffer creditOffer) throws ServerException {
+        Bank creditBank = bankService.findByClient(creditOffer.getClient());
+        Bank clientBank = bankService.findByCredit(creditOffer.getCredit());
+
+       if (!creditBank.equals(clientBank)){
+           throw new ServerException("Client and credit from different banks");
+       }
+
         creditService.save(creditOffer.getCredit());
         clientService.save(creditOffer.getClient());
 
@@ -73,21 +80,28 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     }
 
     public CreditOffer findByClient(UUID uuid) {
-       return creditOfferRepository.findCreditOfferByClientId(uuid);
+        return creditOfferRepository.findCreditOfferByClientId(uuid);
     }
 
     public CreditOffer findByCredit(UUID uuid) {
-       return creditOfferRepository.findCreditOfferByCreditId(uuid);
+        return creditOfferRepository.findCreditOfferByCreditId(uuid);
 
     }
 
     @Override
-    public CreditOffer update(CreditOffer creditOffer) {
+    public CreditOffer update(CreditOffer creditOffer) throws ServerException {
         CreditOffer savedOffer = creditOfferRepository.findById(creditOffer.getId()).orElse(null);
+        Bank creditBank = bankService.findByClient(creditOffer.getClient());
+        Bank clientBank = bankService.findByCredit(creditOffer.getCredit());
 
         if (savedOffer == null) {
             throw new EntityNotFoundException("CreditOffer by with credit id: " + creditOffer.getId() + " not found");
         }
+
+        if (!creditBank.equals(clientBank)){
+            throw new ServerException("Client and credit from different banks");
+        }
+
 
         return creditOfferRepository.save(creditOffer);
     }
@@ -114,6 +128,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     /**
      * Method for calculating the total amount of a loan
+     *
      * @param creditOffer - Credit offer which will be used to calculate
      * @return - total amount of a loan
      */
@@ -123,6 +138,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     /**
      * Method that calculates the payment schedule for an annuity payment
+     *
      * @param creditOffer - the entity on the basis of which you need to build a payment schedule
      * @return list for further save
      */
@@ -152,6 +168,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     /**
      * Method that calculate the amount to be paid by the client each month
+     *
      * @param creditOffer - Credit offer which will be used to calculate
      * @return - The amount that the client will pay on the loan each month
      */
@@ -167,6 +184,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
 
     /**
      * Rounding method, based on value {@link #scale}
+     *
      * @param d - number to be rounded
      * @return - rounded number
      */

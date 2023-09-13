@@ -3,9 +3,9 @@ package bank.system.rest.controller;
 
 import bank.system.model.domain.Client;
 import bank.system.rest.dao.service.impl.BankServiceImpl;
-import bank.system.rest.exception.ValidationException;
 import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
+import bank.system.rest.exception.ServerException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,11 +38,11 @@ public class ClientController {
         model.addAttribute("clients", clientList);
         return "clients";
     }
+
     @GetMapping("/clients/new")
     public String getCreatePage(Model model) {
         model.addAttribute("client", new Client());
-        model.addAttribute("banks",bankServiceImpl.getAll());
-
+        model.addAttribute("banks", bankServiceImpl.getAll());
         return "updateClient";
     }
 
@@ -51,28 +51,26 @@ public class ClientController {
         validator.uuidValidator(id);
 
         Client client = clientServiceImpl.findById(UUID.fromString(id));
+
         model.addAttribute("client", Objects.requireNonNullElseGet(client, Client::new));
-        model.addAttribute("banks",bankServiceImpl.getAll());
+        model.addAttribute("banks", bankServiceImpl.getAll());
         return "updateClient";
     }
 
     @GetMapping("/clients/remove/{id}")
-    public String remove(@PathVariable String id, Model model) {
+    public String remove(@PathVariable String id, Model model) throws ServerException {
         validator.uuidValidator(id);
 
         clientServiceImpl.removeById(UUID.fromString(id));
+
         return "redirect:/clients";
     }
 
     @PostMapping("/clients/new")
-    public String merge(Client client,@RequestParam(name = "bank") String bank) {
+    public String merge(Client client, @RequestParam(name = "bank") String bankId) {
         validator.clientValidation(client);
 
-        if (client.getId() == null) {
-            clientServiceImpl.save(client);
-        } else {
-            clientServiceImpl.update(client);
-        }
+        clientServiceImpl.updateClientInBank(client, UUID.fromString(bankId));
 
         return "redirect:/clients";
     }

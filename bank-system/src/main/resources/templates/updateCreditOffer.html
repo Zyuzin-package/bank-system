@@ -23,7 +23,7 @@
                     <td>
                         <select th:name="clientId" id="clientId" name="clientId">
                             <option th:each="client : ${clientList}"
-                                    th:text="${client.firstName} + ' ' + ${client.secondName} + ', Passport: ' + ${client.passportID}"
+                                    th:text="${client.firstName} + ' ' + ${client.secondName} + ', passport: ' + ${client.passportID}"
                                     th:value="${client.id}">
                             </option>
                         </select>

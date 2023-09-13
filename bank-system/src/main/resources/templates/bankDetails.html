@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment event</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href="@{../assets/css/style.css}" rel="stylesheet">
+    <link th:href="@{/style.css}" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div>
+    <div class="container">
+        <div class="col-12 mx-auto">
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="5" align="center">
+                        <h2 th:text="${bank.title}"></h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" align="center">
+                      <h4>Clients</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>First name</h5>
+                    </td>
+                    <td>
+                        <h5>Second name</h5>
+                    </td>
+                    <td>
+                        <h5>Phone number</h5>
+                    </td>
+                    <td>
+                        <h5>Email</h5>
+                    </td>
+                    <td>
+                        <h5>Passport id</h5>
+                    </td>
+                </tr>
+                <tr th:unless="${#lists.isEmpty(clients)}" th:each="client : ${clients}">
+                    <td th:text="${client.firstName}"></td>
+                    <td th:text="${client.secondName}"></td>
+                    <td th:text="${client.phoneNumber}"></td>
+                    <td th:text="${client.email}"></td>
+                    <td th:text="${client.passportID}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-12">
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2" align="center">
+                        <h4>Credits</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>Limit</h5>
+                    </td>
+                    <td>
+                        <h5>Interest rate</h5>
+                    </td>
+                </tr>
+                <tr th:unless="${#lists.isEmpty(credits)}" th:each="credit : ${credits}">
+                    <td th:text="${credit.limit}"></td>
+                    <td th:text="${credit.interestRate}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

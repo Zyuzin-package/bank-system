@@ -1,7 +1,10 @@
 package bank.system.rest.dao.service.impl;
 
+import bank.system.model.domain.Bank;
+import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.rest.dao.repository.BankRepository;
 import bank.system.rest.exception.EntityNotFoundException;
 import bank.system.rest.dao.repository.CreditRepository;
 import bank.system.rest.dao.service.api.StorageDAO;
@@ -20,17 +23,40 @@ import java.util.UUID;
 public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
 
     private final CreditRepository creditRepository;
+    private final BankServiceImpl bankService;
     @Lazy
     private final CreditOfferServiceImpl creditOfferService;
+
     @Autowired
-    public CreditServiceImpl(CreditRepository creditRepository, CreditOfferServiceImpl creditOfferService) {
+    public CreditServiceImpl(CreditRepository creditRepository, BankServiceImpl bankService, CreditOfferServiceImpl creditOfferService) {
         this.creditRepository = creditRepository;
+        this.bankService = bankService;
         this.creditOfferService = creditOfferService;
     }
 
     @Override
     public Credit save(Credit credit) {
         return creditRepository.save(credit);
+    }
+
+    public Credit updateCreditInBank(Credit credit, UUID bankId) {
+        Bank bank = bankService.findById(bankId);
+        Credit savedCredit;
+
+        if (credit.getId() != null) {
+            savedCredit = update(credit);
+        } else {
+            savedCredit = save(credit);
+        }
+
+        Credit creditInBank = bank.getCreditList().stream().filter(c -> c.getId() == credit.getId()).findFirst().orElse(null);
+
+        if (!savedCredit.equals(creditInBank)) {
+            bank.getCreditList().add(savedCredit);
+            bankService.update(bank);
+        }
+
+        return savedCredit;
     }
 
     @Override
@@ -45,11 +71,8 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
 
     @Override
     public Credit update(Credit credit) {
-        Credit savedCredit = creditRepository.findById(credit.getId()).orElse(null);
-
-        if (savedCredit == null) {
-            throw new EntityNotFoundException("Credit with id: " + credit.getId() + " not found");
-        }
+        Credit savedCredit = creditRepository.findById(credit.getId()).orElseThrow(() -> new EntityNotFoundException("Credit with id: " + credit.getId() + " not found"));
+        credit.setId(savedCredit.getId());
 
         return creditRepository.save(credit);
     }
@@ -62,15 +85,17 @@ public class CreditServiceImpl implements StorageDAO<Credit, UUID> {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
     public void removeById(UUID uuid) throws ServerException {
-        creditRepository.findById(uuid).orElseThrow(
-                () -> new EntityNotFoundException("Credit with id: " + uuid + " not found")
-        );
-
+        Credit oldCredit = creditRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Credit with id: " + uuid + " not found"));
         CreditOffer creditOffer = creditOfferService.findByCredit(uuid);
 
         if (creditOffer != null) {
             throw new ServerException("There is a credit offer for this credit");
         }
+
+        Bank bank = bankService.findByCredit(oldCredit);
+        bank.getCreditList().removeIf(credit -> credit.getId() == oldCredit.getId());
+
+        bankService.update(bank);
 
         creditRepository.deleteById(uuid);
     }

@@ -3,6 +3,7 @@ package bank.system.rest.controller;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.rest.exception.ServerException;
 import bank.system.rest.exception.ValidationException;
 import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
@@ -64,11 +65,9 @@ public class CreditOfferController {
             @RequestParam(name = "clientId") String clientId,
             @RequestParam(name = "duration") Integer duration,
             @RequestParam(name = "fullsum") String fullsum
-    ){
+    ) throws ServerException {
         validator.uuidValidator(creditId);
-
         validator.uuidValidator(clientId);
-
 
         Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
