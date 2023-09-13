@@ -2,8 +2,9 @@ package bank.system.rest.controller;
 
 
 import bank.system.model.domain.Client;
+import bank.system.model.entity_treatment.validators.ClientValidatorImpl;
+import bank.system.model.entity_treatment.validators.UUIDValidatorImpl;
 import bank.system.rest.dao.service.impl.BankServiceImpl;
-import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import bank.system.rest.exception.ServerException;
 import org.springframework.stereotype.Controller;
@@ -23,12 +24,14 @@ public class ClientController {
     private final ClientServiceImpl clientServiceImpl;
     private final BankServiceImpl bankServiceImpl;
 
-    private final Validator validator;
+    private final UUIDValidatorImpl uuidValidatorImpl;
+    private final ClientValidatorImpl clientValidation;
 
-    public ClientController(ClientServiceImpl clientServiceImpl, BankServiceImpl bankServiceImpl, Validator validator) {
+    public ClientController(ClientServiceImpl clientServiceImpl, BankServiceImpl bankServiceImpl, UUIDValidatorImpl uuidValidatorImpl, ClientValidatorImpl clientValidation) {
         this.clientServiceImpl = clientServiceImpl;
         this.bankServiceImpl = bankServiceImpl;
-        this.validator = validator;
+        this.uuidValidatorImpl = uuidValidatorImpl;
+        this.clientValidation = clientValidation;
     }
 
     @GetMapping("/clients")
@@ -48,7 +51,7 @@ public class ClientController {
 
     @GetMapping("/clients/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
-        validator.uuidValidator(id);
+        uuidValidatorImpl.validate(id);
 
         Client client = clientServiceImpl.findById(UUID.fromString(id));
 
@@ -59,7 +62,7 @@ public class ClientController {
 
     @GetMapping("/clients/remove/{id}")
     public String remove(@PathVariable String id, Model model) throws ServerException {
-        validator.uuidValidator(id);
+        uuidValidatorImpl.validate(id);
 
         clientServiceImpl.removeById(UUID.fromString(id));
 
@@ -68,7 +71,7 @@ public class ClientController {
 
     @PostMapping("/clients/new")
     public String merge(Client client, @RequestParam(name = "bank") String bankId) {
-        validator.clientValidation(client);
+        clientValidation.validate(client);
 
         clientServiceImpl.updateClientInBank(client, UUID.fromString(bankId));
 

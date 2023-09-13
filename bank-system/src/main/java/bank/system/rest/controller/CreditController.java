@@ -1,10 +1,10 @@
 package bank.system.rest.controller;
 
 import bank.system.model.domain.Credit;
+import bank.system.model.entity_treatment.validators.CreditValidatorImpl;
+import bank.system.model.entity_treatment.validators.UUIDValidatorImpl;
 import bank.system.rest.dao.service.impl.BankServiceImpl;
 import bank.system.rest.exception.ServerException;
-import bank.system.rest.exception.ValidationException;
-import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +20,15 @@ import java.util.UUID;
 @Controller
 public class CreditController {
     private final CreditServiceImpl creditServiceImpl;
-    private final Validator validator;
     private final BankServiceImpl bankServiceImpl;
+    private final UUIDValidatorImpl uuidValidatorImpl;
+    private final CreditValidatorImpl creditValidatorImpl;
 
-    public CreditController(CreditServiceImpl creditServiceImpl, Validator validator, BankServiceImpl bankServiceImpl) {
+    public CreditController(CreditServiceImpl creditServiceImpl, BankServiceImpl bankServiceImpl, UUIDValidatorImpl uuidValidatorImpl, CreditValidatorImpl creditValidatorImpl) {
         this.creditServiceImpl = creditServiceImpl;
-        this.validator = validator;
         this.bankServiceImpl = bankServiceImpl;
+        this.uuidValidatorImpl = uuidValidatorImpl;
+        this.creditValidatorImpl = creditValidatorImpl;
     }
 
     @GetMapping("/credits")
@@ -47,7 +49,7 @@ public class CreditController {
 
     @GetMapping("/credits/edit/{id}")
     public String getUpdatePage(@PathVariable String id, Model model) {
-        validator.uuidValidator(id);
+        uuidValidatorImpl.validate(id);
 
         Credit credit = creditServiceImpl.findById(UUID.fromString(id));
 
@@ -58,7 +60,7 @@ public class CreditController {
 
     @GetMapping("/credits/remove/{id}")
     public String remove(@PathVariable String id) throws ServerException {
-        validator.uuidValidator(id);
+        uuidValidatorImpl.validate(id);
 
         creditServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/credits";
@@ -67,7 +69,7 @@ public class CreditController {
 
     @PostMapping("/credits/new")
     public String merge(Credit credit, @RequestParam(name = "bank") String bankId) {
-        validator.creditValidation(credit);
+        creditValidatorImpl.validate(credit);
 
         creditServiceImpl.updateCreditInBank(credit, UUID.fromString(bankId));
         return "redirect:/credits";

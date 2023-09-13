@@ -3,9 +3,9 @@ package bank.system.rest.controller;
 import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
+import bank.system.model.entity_treatment.validators.CreditOfferValidatorImpl;
+import bank.system.model.entity_treatment.validators.UUIDValidatorImpl;
 import bank.system.rest.exception.ServerException;
-import bank.system.rest.exception.ValidationException;
-import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
@@ -23,13 +23,16 @@ public class CreditOfferController {
     private final CreditServiceImpl creditServiceImpl;
     private final ClientServiceImpl clientServiceImpl;
 
-    private final Validator validator;
+    private final CreditOfferValidatorImpl creditOfferValidation;
 
-    public CreditOfferController(CreditOfferServiceImpl creditOfferServiceImpl, CreditServiceImpl creditServiceImpl, ClientServiceImpl clientServiceImpl, Validator validator) {
+    private final UUIDValidatorImpl uuidValidatorImpl;
+
+    public CreditOfferController(CreditOfferServiceImpl creditOfferServiceImpl, CreditServiceImpl creditServiceImpl, ClientServiceImpl clientServiceImpl, CreditOfferValidatorImpl creditOfferValidation, UUIDValidatorImpl uuidValidatorImpl) {
         this.creditOfferServiceImpl = creditOfferServiceImpl;
         this.creditServiceImpl = creditServiceImpl;
         this.clientServiceImpl = clientServiceImpl;
-        this.validator = validator;
+        this.creditOfferValidation = creditOfferValidation;
+        this.uuidValidatorImpl = uuidValidatorImpl;
     }
 
     @GetMapping("/creditsOffers")
@@ -53,7 +56,7 @@ public class CreditOfferController {
 
     @GetMapping("/creditsOffers/remove/{id}")
     public String remove(@PathVariable String id) {
-        validator.uuidValidator(id);
+        uuidValidatorImpl.validate(id);
 
         creditOfferServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/creditsOffers";
@@ -66,8 +69,8 @@ public class CreditOfferController {
             @RequestParam(name = "duration") Integer duration,
             @RequestParam(name = "fullsum") String fullsum
     ) throws ServerException {
-        validator.uuidValidator(creditId);
-        validator.uuidValidator(clientId);
+        uuidValidatorImpl.validate(creditId);
+        uuidValidatorImpl.validate(clientId);
 
         Credit credit = creditServiceImpl.findById(UUID.fromString(creditId));
 
@@ -78,7 +81,7 @@ public class CreditOfferController {
                 .paymentSum(Double.parseDouble(fullsum))
                 .build();
 
-        validator.creditOfferValidation(creditOffer);
+        creditOfferValidation.validate(creditOffer);
         creditOfferServiceImpl.save(creditOffer);
 
 

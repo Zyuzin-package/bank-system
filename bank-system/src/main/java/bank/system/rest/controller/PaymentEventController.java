@@ -1,9 +1,8 @@
 package bank.system.rest.controller;
 
 import bank.system.model.domain.PaymentEvent;
+import bank.system.model.entity_treatment.validators.UUIDValidatorImpl;
 import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;
-import bank.system.rest.exception.ValidationException;
-import bank.system.rest.Validator;
 import bank.system.rest.dao.service.impl.PaymentEventServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,18 +20,18 @@ public class PaymentEventController {
 
     private final PaymentEventServiceImpl paymentEventServiceImpl;
     private final CreditOfferServiceImpl creditOfferService;
-    private final Validator validator;
+    private final UUIDValidatorImpl uuidValidatorImpl;
 
 
-    public PaymentEventController(PaymentEventServiceImpl paymentEventServiceImpl, CreditOfferServiceImpl creditOfferService, Validator validator) {
+    public PaymentEventController(PaymentEventServiceImpl paymentEventServiceImpl, CreditOfferServiceImpl creditOfferService, UUIDValidatorImpl uuidValidatorImpl) {
         this.paymentEventServiceImpl = paymentEventServiceImpl;
         this.creditOfferService = creditOfferService;
-        this.validator = validator;
+        this.uuidValidatorImpl = uuidValidatorImpl;
     }
 
     @GetMapping("/paymentEvents/{offerId}")
     public String getPaymentsEvents(Model model, @PathVariable String offerId) {
-        validator.uuidValidator(offerId);
+        uuidValidatorImpl.validate(offerId);
 
         List<PaymentEvent> paymentEvents = paymentEventServiceImpl.getPaymentEventByOfferId(offerId);
 
