@@ -6,6 +6,7 @@ import bank.system.model.domain.CreditOffer;
 import bank.system.rest.dao.repository.ClientRepository;
 import bank.system.rest.dao.service.impl.ClientServiceImpl;
 import bank.system.rest.exception.EntityNotFoundException;
+import bank.system.rest.exception.ServerException;
 import bank.system.rest.exception.ValidationException;
 import jakarta.annotation.Resource;
 import org.junit.Before;
@@ -77,7 +78,7 @@ public class ClientServiceImplTest {
 
 
     @Test
-    public void updatePositive() {
+    public void updatePositive() throws ServerException {
         Mockito.when(clientRepository.findById(uuid)).thenReturn(Optional.of(client));
         Mockito.when(clientRepository.save(client)).thenReturn(client);
 

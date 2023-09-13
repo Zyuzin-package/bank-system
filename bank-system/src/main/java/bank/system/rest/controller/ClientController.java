@@ -70,7 +70,7 @@ public class ClientController {
     }
 
     @PostMapping("/clients/new")
-    public String merge(Client client, @RequestParam(name = "bank") String bankId) {
+    public String merge(Client client, @RequestParam(name = "bank") String bankId) throws ServerException {
         clientValidation.validate(client);
 
         clientServiceImpl.updateClientInBank(client, UUID.fromString(bankId));

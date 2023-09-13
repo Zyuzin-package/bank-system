@@ -31,10 +31,16 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
     }
 
     @Override
-    public Client save(Client client) {
+    public Client save(Client client) throws ServerException {
+        Client oldClient = clientRepository.findClientByPassportID(client.getPassportID());
+
+        if (oldClient.getPassportID().equals(client.getPassportID())){
+            throw new ServerException("Client with passport id: "+client.getPassportID()+" is already registered");
+        }
+
         return clientRepository.save(client);
     }
-    public Client updateClientInBank(Client client, UUID bankId) {
+    public Client updateClientInBank(Client client, UUID bankId) throws ServerException {
         Bank bank = bankService.findById(bankId);
         Client savedClient;
 
@@ -65,9 +71,13 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
     }
 
     @Override
-    public Client update(Client client) {
+    public Client update(Client client) throws ServerException {
         Client savedClient = clientRepository.findById(client.getId()).orElseThrow(() -> new EntityNotFoundException("Client with id: " + client.getId() + " not found"));
         client.setId(savedClient.getId());
+
+        if (savedClient.getPassportID().equals(client.getPassportID())){
+            throw new ServerException("Client with passport id: "+client.getPassportID()+" is already registered");
+        }
 
         return clientRepository.save(client);
     }

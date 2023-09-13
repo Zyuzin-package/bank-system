@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.UUID;
 
 public interface ClientRepository extends JpaRepository<Client, UUID> {
-
+    Client findClientByPassportID(String passportId);
 }
