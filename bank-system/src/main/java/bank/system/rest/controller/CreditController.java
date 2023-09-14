@@ -4,8 +4,8 @@ import bank.system.model.domain.Credit;
 import bank.system.model.entity_treatment.validators.CreditValidatorImpl;
 import bank.system.model.entity_treatment.validators.UUIDValidatorImpl;
 import bank.system.rest.dao.service.impl.BankServiceImpl;
-import bank.system.rest.exception.ServerException;
 import bank.system.rest.dao.service.impl.CreditServiceImpl;
+import bank.system.rest.exception.ServerException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +65,6 @@ public class CreditController {
         creditServiceImpl.removeById(UUID.fromString(id));
         return "redirect:/credits";
     }
-
 
     @PostMapping("/credits/new")
     public String merge(Credit credit, @RequestParam(name = "bank") String bankId) {

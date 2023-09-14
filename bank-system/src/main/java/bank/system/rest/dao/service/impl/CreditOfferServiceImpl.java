@@ -54,12 +54,9 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
         Bank creditBank = bankService.findByClient(creditOffer.getClient());
         Bank clientBank = bankService.findByCredit(creditOffer.getCredit());
 
-       if (!creditBank.equals(clientBank)){
-           throw new ServerException("Client and credit from different banks");
-       }
-
-        creditService.save(creditOffer.getCredit());
-        clientService.save(creditOffer.getClient());
+        if (!creditBank.equals(clientBank)) {
+            throw new ServerException("Client and credit from different banks");
+        }
 
         List<PaymentEvent> paymentGraph = buildPaymentGraph(creditOffer);
 
@@ -98,10 +95,9 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
             throw new EntityNotFoundException("CreditOffer by with credit id: " + creditOffer.getId() + " not found");
         }
 
-        if (!creditBank.equals(clientBank)){
+        if (!creditBank.equals(clientBank)) {
             throw new ServerException("Client and credit from different banks");
         }
-
 
         return creditOfferRepository.save(creditOffer);
     }
@@ -115,6 +111,7 @@ public class CreditOfferServiceImpl implements StorageDAO<CreditOffer, UUID> {
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
     public void removeById(UUID uuid) {
         CreditOffer creditOffer = findById(uuid);
+
         if (creditOffer == null) {
             throw new EntityNotFoundException("CreditOffer by with id: " + uuid + " not found");
         }

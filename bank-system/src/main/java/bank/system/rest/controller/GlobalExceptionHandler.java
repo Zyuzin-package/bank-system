@@ -22,8 +22,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public String defaultException(Model model){
-        model.addAttribute("errorTemplate","Server error");
+    public String defaultException(Model model, Exception e){
+        model.addAttribute("errorTemplate","Server error: "+ e.getMessage());
         return "error";
     }
 

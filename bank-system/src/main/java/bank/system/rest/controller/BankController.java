@@ -62,7 +62,7 @@ public class BankController {
     }
 
     @GetMapping("/banks/remove/{id}")
-    public String remove(@PathVariable String id, Model model) throws ServerException {
+    public String remove(@PathVariable String id) throws ServerException {
         uuidValidatorImpl.validate(id);
 
         bankServiceImpl.removeById(UUID.fromString(id));

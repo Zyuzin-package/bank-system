@@ -46,8 +46,9 @@ public class BankServiceImpl implements StorageDAO<Bank, UUID> {
     @Override
     public Bank update(Bank bank) {
         Bank savedBank = bankRepository.findById(bank.getId()).orElseThrow(() -> new EntityNotFoundException("Bank with id: " + bank.getId() + " not found"));
-
         bank.setId(savedBank.getId());
+        bank.setClientList(savedBank.getClientList());
+        bank.setCreditList(savedBank.getCreditList());
 
         return bankRepository.save(bank);
     }
@@ -55,11 +56,8 @@ public class BankServiceImpl implements StorageDAO<Bank, UUID> {
     @Override
     public void remove(Bank bank) throws ServerException {
         Bank oldBank = findById(bank.getId());
-        if (!oldBank.getClientList().isEmpty()) {
-            throw new ServerException("Bank has clients");
-        } else if (!oldBank.getCreditList().isEmpty()) {
-            throw new ServerException("Bank has credits");
-        }
+
+        checkBankSubEntity(oldBank);
 
         bankRepository.delete(bank);
     }
@@ -68,12 +66,16 @@ public class BankServiceImpl implements StorageDAO<Bank, UUID> {
     public void removeById(UUID id) throws ServerException {
         Bank oldBank = bankRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bank with id: " + id + " not found"));
 
-        if (!oldBank.getClientList().isEmpty()){
-            throw new ServerException("Bank has clients");
-        } else if (!oldBank.getCreditList().isEmpty()){
-            throw new ServerException("Bank has credits");
-        }
+        checkBankSubEntity(oldBank);
 
         bankRepository.deleteById(id);
+    }
+
+    private void checkBankSubEntity(Bank bank) throws ServerException {
+        if (!bank.getClientList().isEmpty()) {
+            throw new ServerException("Bank has clients");
+        } else if (!bank.getCreditList().isEmpty()) {
+            throw new ServerException("Bank has credits");
+        }
     }
 }

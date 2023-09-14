@@ -34,12 +34,20 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
     public Client save(Client client) throws ServerException {
         Client oldClient = clientRepository.findClientByPassportID(client.getPassportID());
 
-        if (oldClient.getPassportID().equals(client.getPassportID())){
-            throw new ServerException("Client with passport id: "+client.getPassportID()+" is already registered");
+        if (oldClient!=null && oldClient.getPassportID().equals(client.getPassportID())) {
+            throw new ServerException("Client with passport id: " + client.getPassportID() + " is already registered");
         }
 
         return clientRepository.save(client);
     }
+
+    /**
+     * This method updates the list of bank clients when a new client is added
+     * @param client - updated client
+     * @param bankId - bank, to which the client is attached
+     * @return - saved client,
+     * @throws ServerException - Error that occurs when saving or updating fails
+     */
     public Client updateClientInBank(Client client, UUID bankId) throws ServerException {
         Bank bank = bankService.findById(bankId);
         Client savedClient;
@@ -56,7 +64,6 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
             bank.getClientList().add(savedClient);
             bankService.update(bank);
         }
-
         return savedClient;
     }
 
@@ -74,10 +81,6 @@ public class ClientServiceImpl implements StorageDAO<Client, UUID> {
     public Client update(Client client) throws ServerException {
         Client savedClient = clientRepository.findById(client.getId()).orElseThrow(() -> new EntityNotFoundException("Client with id: " + client.getId() + " not found"));
         client.setId(savedClient.getId());
-
-        if (savedClient.getPassportID().equals(client.getPassportID())){
-            throw new ServerException("Client with passport id: "+client.getPassportID()+" is already registered");
-        }
 
         return clientRepository.save(client);
     }

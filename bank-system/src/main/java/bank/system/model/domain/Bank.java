@@ -30,11 +30,11 @@ public class Bank {
     private String title;
 
     @OneToMany
-    @Cascade(value ={CascadeType.REMOVE})
+    @Cascade(value ={CascadeType.ALL})
     private List<Credit> creditList;
 
     @OneToMany
-    @Cascade(value ={CascadeType.REMOVE})
+    @Cascade(value ={CascadeType.ALL})
     private List<Client> clientList;
 
 }
