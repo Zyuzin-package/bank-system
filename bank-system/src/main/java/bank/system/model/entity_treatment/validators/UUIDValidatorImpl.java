@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 public class UUIDValidatorImpl implements Validator<String> {
     /**
      * The method that processes {@link java.util.UUID}. In case of an error in one or more fields - throws an error {@link ValidationException}.
-     * @param uuid - Entity to check
-     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     * @param uuid Entity to check
+     * @return true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
     public String validate(String uuid) {
         StringBuilder errorMessage = new StringBuilder();

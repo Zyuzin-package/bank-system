@@ -19,9 +19,8 @@ public class ClientValidatorImpl implements Validator<Client> {
 
     /**
      * The method that processes {@link Client}. In case of an error in one or more fields - throws an error {@link ValidationException}.
-     *
-     * @param client - Entity to check
-     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     * @param client Entity to check
+     * @return true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
     public Client validate(Client client) {
         StringBuilder errorMessage = new StringBuilder();

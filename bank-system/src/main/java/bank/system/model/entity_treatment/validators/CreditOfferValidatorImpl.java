@@ -23,19 +23,25 @@ public class CreditOfferValidatorImpl implements Validator<CreditOffer> {
     public CreditOfferValidatorImpl(UUIDValidatorImpl uuidValidatorImpl) {
         this.uuidValidatorImpl = uuidValidatorImpl;
     }
+
+    /**
+     * Getter that is used to validate property values in {@link bank.system.config.BeanPostProcessorImpl}
+     */
     public double getMaxCreditOfferDuration() {
         return maxCreditOfferDuration;
     }
 
+    /**
+     * Getter that is used to validate property values in {@link bank.system.config.BeanPostProcessorImpl}
+     */
     public double getMinCreditOfferDuration() {
         return minCreditOfferDuration;
     }
 
     /**
      * The method that processes {@link CreditOffer}. In case of an error in one or more fields - throws an error {@link ValidationException}.
-     *
-     * @param creditOffer - Entity to check
-     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     * @param creditOffer Entity to check
+     * @return true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
     public CreditOffer validate(CreditOffer creditOffer) {
         StringBuilder errorMessage = new StringBuilder();

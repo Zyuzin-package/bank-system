@@ -27,9 +27,8 @@ public class CreditValidatorImpl {
 
     /**
      * The method that processes {@link Credit}. In case of an error in one or more fields - throws an error {@link ValidationException}.
-     *
-     * @param credit - Entity to check
-     * @return - true if entity successfully passed complete validation, else - throws {@link ValidationException}.
+     * @param credit Entity to check
+     * @return true if entity successfully passed complete validation, else - throws {@link ValidationException}.
      */
     public Credit validate(Credit credit) {
         StringBuilder errorMessage = new StringBuilder();

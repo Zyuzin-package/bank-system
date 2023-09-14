@@ -4,6 +4,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+/**
+ * The class is responsible for transforming the fields of the client’s phone number and ID of the client’s passport,
+ * for convenient saving in the database
+ */
 @Component
 public class ClientFormatter {
 
