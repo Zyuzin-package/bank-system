@@ -53,7 +53,7 @@ public class ClientServiceImplTest {
         client = Client.builder()
                 .email("KorkWake@smarts.ru")
                 .firstName("Kork")
-                .passportID("90-77-856785")
+                .passportID("91-77-856385")
                 .phoneNumber("8-999-765-67-78")
                 .secondName("Wake")
                 .id(uuid)

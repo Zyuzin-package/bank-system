@@ -26,17 +26,15 @@ import static org.junit.Assert.assertNull;
 public class CreditOfferRepositoryTest {
     @Autowired
     private CreditOfferRepository creditOfferRepository;
-    private Credit credit;
-    private  Client client;
     private CreditOffer creditOffer;
 
     @Before
     public void initEnvironment() {
-        credit = Credit.builder()
+        Credit credit = Credit.builder()
                 .interestRate(15)
                 .limit(20000)
                 .build();
-        client = Client.builder()
+        Client client = Client.builder()
                 .email("KorkWake@smarts.ru")
                 .firstName("Kork")
                 .passportID("90-77-856785")

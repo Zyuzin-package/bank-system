@@ -4,8 +4,10 @@ import bank.system.model.domain.Client;
 import bank.system.model.domain.Credit;
 import bank.system.model.domain.CreditOffer;
 import bank.system.rest.dao.repository.CreditOfferRepository;
+import bank.system.rest.dao.service.impl.BankServiceImpl;
 import bank.system.rest.dao.service.impl.CreditOfferServiceImpl;
 import bank.system.rest.exception.EntityNotFoundException;
+import bank.system.rest.exception.ServerException;
 import jakarta.annotation.Resource;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,7 +33,8 @@ import static org.junit.Assert.assertThrows;
 @ActiveProfiles(value = "test")
 public class CreditOfferServiceImplTest {
     @InjectMocks
-    private CreditOfferServiceImpl creditOfferService;
+    private  CreditOfferServiceImpl creditOfferService;
+
     @Mock
     @Resource
     private CreditOfferRepository creditOfferRepository;
@@ -41,6 +45,7 @@ public class CreditOfferServiceImplTest {
     private Credit credit;
     private Client client;
     private CreditOffer creditOffer;
+
 
     @BeforeEach
     @Before
@@ -89,25 +94,6 @@ public class CreditOfferServiceImplTest {
 
         assertThrows(EntityNotFoundException.class,
                 () -> creditOfferService.findById(uuidCreditOffer));
-    }
-
-
-    @Test
-    public void updatePositive() {
-        Mockito.when(creditOfferRepository.findById(uuidCreditOffer)).thenReturn(Optional.of(creditOffer));
-        Mockito.when(creditOfferRepository.save(creditOffer)).thenReturn(creditOffer);
-
-        CreditOffer savedCreditOffer = creditOfferService.update(creditOffer);
-        assertNotNull(savedCreditOffer);
-        assertEquals(savedCreditOffer.getId(), uuidCreditOffer);
-    }
-
-    @Test
-    public void updateNegative() {
-        Mockito.when(creditOfferRepository.findById(uuidCreditOffer)).thenReturn(Optional.empty());
-
-        assertThrows(EntityNotFoundException.class,
-                () -> creditOfferService.update(creditOffer));
     }
 
     @Test

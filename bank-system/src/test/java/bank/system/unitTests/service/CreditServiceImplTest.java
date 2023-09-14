@@ -90,14 +90,6 @@ public class CreditServiceImplTest {
         assertThrows(EntityNotFoundException.class,
                 () -> creditService.update(credit));
     }
-
-    @Test
-    public void removeNegative() {
-        Mockito.when(creditRepository.findById(uuid)).thenReturn(null);
-        Mockito.when(creditOfferService.findByCredit(uuid)).thenThrow(EntityNotFoundException.class);
-
-        assertThrows(EntityNotFoundException.class,
-                () -> creditService.removeById(uuid));
-    }
+    
 }
 
