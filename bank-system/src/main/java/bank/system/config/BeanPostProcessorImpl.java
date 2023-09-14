@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BeanPostProcessorImpl implements BeanPostProcessor {
+    /**
+     * Checking the validity of the property in {@link bank.system.model.domain.CreditOffer}, before starting the application
+     */
     @SneakyThrows
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
