@@ -90,6 +90,6 @@ public class CreditServiceImplTest {
         assertThrows(EntityNotFoundException.class,
                 () -> creditService.update(credit));
     }
-    
+
 }
 

@@ -1,0 +1,83 @@
+/*C12*/SET SCHEMA PUBLIC
+drop table if exists public.bank cascade 
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists bank_client_list cascade 
+drop table if exists bank_credit_list cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+create table public.bank (id binary(16) not null, title varchar(255), primary key (id))
+create table public.client (id binary(16) not null, email varchar(255), first_name varchar(255), passportid varchar(255), phone_number varchar(255), second_name varchar(255), primary key (id))
+create table public.credit (id binary(16) not null, interest_rate float(53) not null, limit float(53) not null, primary key (id))
+create table public.credit_offer (id binary(16) not null, duration integer not null, payment_sum float(53) not null, client_id binary(16), credit_id binary(16), primary key (id))
+create table public.payment_event (id binary(16) not null, credit_sum float(53) not null, interest_sum float(53) not null, local_date date, payment_sum float(53) not null, credit_offer_id binary(16), primary key (id))
+alter table public.client add constraint UK_ik3p1fjgcdk0unb6w1y68ppp6 unique (passportid)
+create table bank_client_list (bank_id binary(16) not null, client_list_id binary(16) not null)
+create table bank_credit_list (bank_id binary(16) not null, credit_list_id binary(16) not null)
+create table credit_offer_payment_event_list (credit_offer_id binary(16) not null, payment_event_list_id binary(16) not null)
+alter table bank_client_list add constraint UK_q0jj5ght012wm0hdl7pyf1vwc unique (client_list_id)
+alter table bank_credit_list add constraint UK_9dphuwtddf88ulic704y0w6u8 unique (credit_list_id)
+alter table credit_offer_payment_event_list add constraint UK_da3akgxwrn4c60i64p888gtsq unique (payment_event_list_id)
+alter table public.credit_offer add constraint FK9d0yha92vq76j1p83ftcymopy foreign key (client_id) references public.client
+alter table public.credit_offer add constraint FKnvc9mqgyq6ptbumj35edcgf4i foreign key (credit_id) references public.credit
+alter table public.payment_event add constraint FK5ghbi796cq03o4557ajpw7fla foreign key (credit_offer_id) references public.credit_offer
+alter table bank_client_list add constraint FKj23thvlf5tk9oy0sf0808lyxy foreign key (client_list_id) references public.client
+alter table bank_client_list add constraint FKp82wiv8s7eydnrgjvtb2ebhm2 foreign key (bank_id) references public.bank
+alter table bank_credit_list add constraint FK7l817fym4xdngqvu8gpafw7aj foreign key (credit_list_id) references public.credit
+alter table bank_credit_list add constraint FK7e7qqta7g8wdc4516nq22wkf1 foreign key (bank_id) references public.bank
+alter table credit_offer_payment_event_list add constraint FK5frxbpxiki3kwqd6ryp6bd0k3 foreign key (payment_event_list_id) references public.payment_event
+alter table credit_offer_payment_event_list add constraint FKbn1r3pc2xxs9vadwlsehy7sg1 foreign key (credit_offer_id) references public.credit_offer
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d0','KorkWake@smarts.ru','Kork','9177856785','89587656778','Wake')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d1','Anatoliy@gmail.com','Anatoliy','9177856778','89678587656','Noriaki')
+COMMIT
+INSERT INTO CLIENT VALUES('20e60e0175d4f44cd6f7947883ddd4d2','pro100Noriaki@mail.ru','Tolik','9177787856','89876585678','Kishibe')
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a1',5.0E0,50000.0E0)
+COMMIT
+INSERT INTO CREDIT VALUES('20e60e0175d4f44cd6f7947883ddd5a2',12.0E0,20000.0E0)
+COMMIT
+INSERT INTO BANK VALUES('20e60e0175d4f44cd6f7947883ddd5d0','Krok bank')
+COMMIT
+INSERT INTO BANK VALUES('20e60e0175d4f44cd6f7947883ddd5d1','SberBank')
+COMMIT
+INSERT INTO BANK_CLIENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5d0','20e60e0175d4f44cd6f7947883ddd4d0')
+COMMIT
+INSERT INTO BANK_CLIENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5d0','20e60e0175d4f44cd6f7947883ddd4d1')
+COMMIT
+INSERT INTO BANK_CREDIT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5d0','20e60e0175d4f44cd6f7947883ddd5a1')
+COMMIT
+INSERT INTO BANK_CLIENT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5d1','20e60e0175d4f44cd6f7947883ddd4d2')
+COMMIT
+INSERT INTO BANK_CREDIT_LIST VALUES('20e60e0175d4f44cd6f7947883ddd5d1','20e60e0175d4f44cd6f7947883ddd5a2')
+COMMIT
+INSERT INTO CREDIT VALUES('493fcbb47b474c8d9f79455b3a48d1c2',15.0E0,20000.0E0)
+COMMIT
+drop table if exists public.bank cascade 
+drop table if exists public.client cascade 
+drop table if exists public.credit cascade 
+drop table if exists public.credit_offer cascade 
+drop table if exists public.payment_event cascade 
+drop table if exists bank_client_list cascade 
+drop table if exists bank_credit_list cascade 
+drop table if exists credit_offer_payment_event_list cascade 
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
